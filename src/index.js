@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "@store";
+import { store, persistor } from "@store";
 import Desk from "@routes/desk/desk.js";
 import Home from "@routes/home/home.js";
 import { PersistGate } from "redux-persist/integration/react";

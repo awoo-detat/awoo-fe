@@ -26,13 +26,13 @@ function WebSocketProvider({ children }) {
     };
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      console.log("message received:", { data });
       setSocketMessage(JSON.parse(e.data));
       switch (data.messageType) {
         case "idSet":
           dispatch(setUserId({ id: data.payload }));
           break;
         default:
-          console.log({ data });
           break;
       }
     };
@@ -40,12 +40,11 @@ function WebSocketProvider({ children }) {
       console.log("setting username on server to:", userName);
       socket.send(
         JSON.stringify({
-          type: "setName",
+          messageType: "setName",
           playerName: userName,
         })
       );
     };
-    console.log("ws.current:", socket);
     return () => {
       socket.close();
     };
