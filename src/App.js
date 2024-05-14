@@ -1,14 +1,16 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { increment } from "@slices/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
 import logo from "./logo.svg";
 import "./App.css";
 import { getTodosTestAPI } from "./store/awoo-client/api";
-import { increment } from "@slices/counterSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { clearSession, setupUser } from "./store/slices/userSlice";
 
 function App() {
+  const { name } = useSelector(({ user }) => user);
+  const [userName, setUserName] = useState(name);
   const count = useSelector(({ counter }) => counter.value);
   const dispatch = useDispatch();
-  console.log({ count });
 
   const handleIncrement = useCallback(() => {
     dispatch(increment());
@@ -19,6 +21,14 @@ function App() {
     console.info({ response });
   }, []);
 
+  const handleAddUser = useCallback(() => {
+    dispatch(setupUser({ name: userName }));
+  }, [dispatch, userName]);
+
+  const handleClearUser = useCallback(() => {
+    dispatch(clearSession());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -26,9 +36,20 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button onClick={handleIncrement}>Click me to increment</button>
+        <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
+        <button type="button" onClick={handleAddUser}>
+          Click me to connect a user
+        </button>
+        <button type="button" onClick={handleClearUser}>
+          Click me to reset the user
+        </button>
+        <button type="button" onClick={handleIncrement}>
+          Click me to increment
+        </button>
         <p>{count}</p>
-        <button onClick={handleAPIClick}>Click me to test the api</button>
+        <button type="button" onClick={handleAPIClick}>
+          Click me to test the api
+        </button>
         <a
           className="App-link"
           href="https://reactjs.org"
