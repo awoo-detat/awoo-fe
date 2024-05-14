@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Views from '../views/views.js';
 import "@scss/diurnal.scss";
+import paper from '../../assets/paper.png';
 import { useCallback, useState } from 'react';
 
 export default function Diurnal() {
@@ -18,7 +19,9 @@ export default function Diurnal() {
   const handleShow = () => setShowViews(true);
 
   return (
-    <div className={`diurnal ${isNight ? 'diurnal__night' : ''}`}>
+    <div
+      className={`diurnal ${isNight ? 'diurnal__night' : ''}`}
+    >
       <Offcanvas show={showViews} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Views</Offcanvas.Title>
@@ -27,19 +30,14 @@ export default function Diurnal() {
           <Views />
         </Offcanvas.Body>
       </Offcanvas>
-      <div className="diurnal__wrapper">
+      <div className="diurnal__wrapper" style={{ backgroundImage: "url(" + paper + ")" }}>
         <Container>
           <Row>
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src={require('../../assets/BACK.jpg')} />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                  </Card.Text>
-                  <Button variant="primary">Go somewhere</Button>
+                  <Button variant="primary">View your role</Button>
                 </Card.Body>
               </Card>
             </Col>

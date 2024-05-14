@@ -4,7 +4,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "@store";
-import Diurnal from "@routes/diurnal/diurnal.js";
+import Desk from "@routes/desk/desk.js";
 import Home from "@routes/home/home.js";
 import reportWebVitals from "./reportWebVitals";
 
@@ -14,8 +14,8 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/day",
-    element: <Diurnal />,
+    path: "/desk",
+    element: <Desk />,
   },
 ]);
 
