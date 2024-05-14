@@ -13,12 +13,31 @@
   
   &__wrapper {
     width: 100%;
-    // max-width: 600px;
-    margin: 0 5rem;
+    min-height: 600px;
     background-size: cover;
-  
-    p {
-      color: red;
+    padding: 5rem;
+
+    .role-card {
+      width: 250px;
+      height: 370px;
+      background: #f8f7f7;
+      margin-bottom: 1rem;
+      position: relative;
+
+      &.front-view {
+        > img {
+          margin-top: 30%;
+          transition: transform 0.8s;
+          transform-style: preserve-3d;
+        }
+      }
+
+      > img {
+        width: 100%;
+        height: auto;
+        max-width: 250px;
+        margin: 0 auto 2rem auto;
+      }
     }
   }
 }
