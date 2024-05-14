@@ -39,8 +39,10 @@ export default function Voting() {
   const votingOptionsWithTallys = listOfAlivePlayers.map((item, idx) => {
     let formattedName;
     if (item.numVotes > 0 && item.voters.length > 0) {
-      const combinedVoters = item.voters.length > 1 ? item.voters.join(", ") : item.voters[0];
-      formattedName = `${item.name} - ${item.numVotes} from ${combinedVoters}`;
+      const combinedVoters = item.voters.length > 1
+        ? item.voters.join(', ')
+        : item.voters[0];
+      formattedName = `${item.name} - ${item.numVotes} vote${ item.numVotes === 1 ? '' : 's'} from ${combinedVoters}`;
     } else {
       formattedName = `${item.name} - 0 votes`;
     }
@@ -49,7 +51,7 @@ export default function Voting() {
 
   return (
     <div className="voting__wrapper">
-      <h1>Choose a sacrifice</h1>
+      <h2>Choose a sacrifice</h2>
       <Form>
         {votingOptionsWithTallys}
         <Button variant="primary" type="submit">
