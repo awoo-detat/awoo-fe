@@ -1,6 +1,3 @@
-import { getStore } from "@store/index";
-import { INSPECTION_SET_UPDATING } from "@store/inspection/actionTypes";
-
 const interceptors = {
   response: {
     success(response) {
@@ -9,16 +6,9 @@ const interceptors = {
     async error(error) {
       if (error) {
         const status = error.response?.status;
-        const { config, code: errorCode } = error;
-        const { url: configUrl = "" } = config;
-        const store = getStore();
-
-        // handle request to inspections api timeouts
+        const { code: errorCode } = error;
         const connectionDidTimeout = errorCode === "ECONNABORTED";
         if (connectionDidTimeout) {
-          if (configUrl.includes("/inspections")) {
-            store.dispatch({ type: INSPECTION_SET_UPDATING, payload: { updating: false } });
-          }
           return Promise.reject(error);
         }
 

@@ -1,20 +1,20 @@
 import axios from "axios";
 import * as brotli from "brotli-js";
-import { getStore } from "@store/index";
+// import { getStore } from "@store/index";
 import { installInterceptors } from "./interceptors";
 
 class ApiClient {
   constructor(baseUri, timeout = 30) {
-    const store = getStore();
+    // const store = getStore();
     this.baseUri = baseUri;
     this.timeout = timeout * 1000; // milliseconds, default is 30 seconds
 
     this.headers = {
       "Content-Type": "application/json",
       "Accept-Encoding": "gzip, br",
-      Authorization: store.getState().auth.tokens
-        ? `Bearer ${store.getState().auth.tokens.jwtToken}`
-        : null,
+      // Authorization: store.getState().auth.tokens
+      //   ? `Bearer ${store.getState().auth.tokens.jwtToken}`
+      //   : null,
     };
 
     this.axiosInstance = axios.create({

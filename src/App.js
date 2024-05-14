@@ -2,11 +2,21 @@ import { useCallback } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { getTodosTestAPI } from "./store/awoo-client/api";
+import { increment } from "@slices/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  const handleClick = useCallback(async () => {
+  const count = useSelector(({ counter }) => counter.value);
+  const dispatch = useDispatch();
+  console.log({ count });
+
+  const handleIncrement = useCallback(() => {
+    dispatch(increment());
+  }, [dispatch]);
+
+  const handleAPIClick = useCallback(async () => {
     const response = await getTodosTestAPI();
-    console.log({ response });
+    console.info({ response });
   }, []);
 
   return (
@@ -16,7 +26,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button onClick={handleClick}>Click me to test the api</button>
+        <button onClick={handleIncrement}>Click me to increment</button>
+        <p>{count}</p>
+        <button onClick={handleAPIClick}>Click me to test the api</button>
         <a
           className="App-link"
           href="https://reactjs.org"
