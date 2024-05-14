@@ -2,7 +2,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultState = {
-  name: null,
+  localUser: {
+    name: null,
+  },
+  remoteUsers: [],
 };
 
 export const userSlice = createSlice({
@@ -10,10 +13,11 @@ export const userSlice = createSlice({
   initialState: defaultState,
   reducers: {
     setupUser: (state, action) => {
-      console.log("Setting up user", action.payload);
-      state.name = action.payload.name;
+      state.localUser.name = action.payload.name;
     },
-    clearSession: () => defaultState,
+    clearSession: (state) => {
+      state.localUser = defaultState.localUser;
+    },
   },
 });
 
