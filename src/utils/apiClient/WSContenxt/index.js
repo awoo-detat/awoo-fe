@@ -2,6 +2,7 @@ import { useEffect, createContext, useRef, useMemo, useState } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserId } from "../../../store/slices/userSlice";
+import { setUsers } from "../../../store/slices/gameSlice";
 
 const WebSocketContext = createContext();
 
@@ -25,12 +26,26 @@ function WebSocketProvider({ children }) {
       setIsReady(false);
     };
     socket.onmessage = (e) => {
-      const data = JSON.parse(e.data);
+      let data;
+      try {
+        data = JSON.parse(e.data);
+      } catch (error) {
+        console.error("error parsing received message:", error);
+      }
       console.log("message received:", { data });
       setSocketMessage(JSON.parse(e.data));
       switch (data.messageType) {
         case "idSet":
           dispatch(setUserId({ id: data.payload }));
+          break;
+        case "playerJoin":
+          console.log("A player joined!");
+          // TODO: some other stuff
+          break;
+        case "alivePlayerList":
+          dispatch(setUsers({ users: data.payload }));
+          break;
+        case "rolesList":
           break;
         default:
           break;
@@ -44,6 +59,15 @@ function WebSocketProvider({ children }) {
           playerName: userName,
         })
       );
+    };
+    socket.connect = () => {
+      console.log("connecting user to server");
+      socket.send(JSON.stringify({ messageType: "connect" }));
+    };
+    socket.leave = () => {
+      console.log("removing user from server");
+      socket.send(JSON.stringify({ messageType: "quit" }));
+      dispatch(setUserId({ id: null }));
     };
     return () => {
       socket.close();
