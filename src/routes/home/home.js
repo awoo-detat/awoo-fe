@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
-import { getTodosTestAPI } from "@store/awoo-client/api";
 import { clearSession, setUserName } from "@slices/userSlice";
 import { resetGame, startGame } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
@@ -9,18 +8,11 @@ import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
 
 export default function Home() {
   const { name, id } = useSelector(({ user }) => user.localUser);
-  const { inProgress, users } = useSelector(({ game }) => game);
+  const { inProgress, users, rolesetOptions } = useSelector(({ game }) => game);
   const [userName, setUserNameFromInput] = useState(name);
   const dispatch = useDispatch();
   const [isReady, socketMessage, ws] = useContext(WebSocketContext);
-  console.log({ name, id, users });
-
-  // TODO: show the status of the websocket connection
-
-  const handleAPIClick = useCallback(async () => {
-    const response = await getTodosTestAPI();
-    console.info({ response });
-  }, []);
+  console.log({ name, id, users, rolesetOptions });
 
   const handleUpdateUser = useCallback(() => {
     dispatch(setUserName({ name: userName }));

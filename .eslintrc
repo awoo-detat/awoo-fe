@@ -19,16 +19,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-plusplus": "off",
     "react/jsx-props-no-spreading": "off",
-    "no-console": [
-      "error",
-      {
-        "allow": [
-          "warn",
-          "error",
-          "debug"
-        ]
-      }
-    ],
+    "no-console": "off",
     "consistent-return": "off",
     "import/no-named-as-default": 0,
     "react/jsx-filename-extension": [
