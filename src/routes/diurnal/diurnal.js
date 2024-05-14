@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Views from '../views/views.js';
+import Voting from '../voting/voting.js';
 import "@scss/diurnal.scss";
 import paper from '../../assets/paper.png';
 import { useCallback, useState } from 'react';
@@ -45,7 +46,7 @@ export default function Diurnal() {
         style={{ backgroundImage: "url(" + paper + ")" }}
       >
         <Container>
-          <Row className="align-items-center">
+          <Row className="align-items-flex-start">
             <Col xs={3}>
               <Card
                 className={`role-card ${showFront ? 'front-view' : ''}`}
@@ -78,7 +79,7 @@ export default function Diurnal() {
               </Container>
             </Col>
             <Col>
-              OTHER CONTENT RE: VOTING WILL APPEAR HERE
+              <Voting />
             </Col>
           </Row>
         </Container>
