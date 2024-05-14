@@ -6,7 +6,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Views from '../views/views.js';
 import Voting from '../voting/voting.js';
 import "@scss/diurnal.scss";
-import paper from '../../assets/paper.png';
+import paper2 from '../../assets/paper2.png';
 import { useState, useMemo } from 'react';
 
 export default function Diurnal() {
@@ -46,7 +46,7 @@ export default function Diurnal() {
       </Offcanvas>
       <div
         className="diurnal__wrapper"
-        style={{ backgroundImage: "url(" + paper + ")" }}
+        style={{ backgroundImage: "url(" + paper2 + ")" }}
       >
         <Container>
           <Row className="align-items-flex-start">
@@ -87,6 +87,7 @@ export default function Diurnal() {
               </Container>
             </Col>
             <Col lg={8} md={12}>
+              <h1>Day 1</h1>
               <Voting />
             </Col>
           </Row>
