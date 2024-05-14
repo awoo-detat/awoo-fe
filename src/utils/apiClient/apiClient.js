@@ -43,11 +43,14 @@ class ApiClient {
   }
 
   get(url, params) {
+    console.log(this.baseUri, url, params, `${this.baseUri}${url}`);
     const config = {
       url: `${this.baseUri}${url}`,
       method: "GET",
       params,
     };
+
+    console.log({ config });
 
     return this.request(config);
   }

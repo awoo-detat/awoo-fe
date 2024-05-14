@@ -12,8 +12,11 @@ export const userSlice = createSlice({
   name: "user",
   initialState: defaultState,
   reducers: {
-    setupUser: (state, action) => {
+    setUserName: (state, action) => {
       state.localUser.name = action.payload.name;
+    },
+    setUserId: (state, action) => {
+      state.localUser.id = action.payload.id;
     },
     clearSession: (state) => {
       state.localUser = defaultState.localUser;
@@ -21,6 +24,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setupUser, clearSession } = userSlice.actions;
+export const { setUserName, clearSession, setUserId } = userSlice.actions;
 
 export default userSlice.reducer;
