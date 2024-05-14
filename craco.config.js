@@ -15,6 +15,7 @@ module.exports = {
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@mocks": path.resolve(__dirname, "src/mocks"),
       "@routes": path.resolve(__dirname, "src/routes"),
+      "@scss": path.resolve(__dirname, "src/scss"),
       "@slices": path.resolve(__dirname, "src/store/slices"),
     },
   },
