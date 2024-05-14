@@ -7,33 +7,6 @@ import Accordion from 'react-bootstrap/Accordion';
 import { useCallback, useState } from 'react';
 
 export default function Views() {
-  const headerCols = [
-    // probably reformat day and night depending
-    // on api but hard coding for now
-    // could also move to constants but wasted
-    // effort for this IMO
-    {
-      prettyName: 'Date and Time',
-      colName: 'dateTime',
-    },
-    {
-      prettyName: 'Player Name',
-      colName: 'playerName',
-    },
-    {
-      prettyName: 'Role Status',
-      colName: 'playerStatus',
-    },
-    {
-      prettyName: 'Scryed?',
-      colName: 'scryedStatus',
-    },
-  ].map(col =>
-    <Col className="header-column">
-      { col.prettyName }
-    </Col>
-  );
-
   let listOfAccordionIds = [];
 
   const accordionRows = [
@@ -64,9 +37,14 @@ export default function Views() {
   ].map((viewStat, idx) => {
     const curId = `event-${idx}`;
     listOfAccordionIds.push(curId);
+    const isDay = viewStat.dateTime.indexOf('Day') >= 0;
     return (
       <Accordion.Item eventKey={curId}>
-        <Accordion.Header>{viewStat.dateTime}</Accordion.Header>
+        <Accordion.Header
+          className={`${isDay ? 'day-header' : 'night-header'}`}
+        >
+          {viewStat.dateTime}
+        </Accordion.Header>
         <Accordion.Body>
           <Container fluid>
             <Row>
@@ -87,7 +65,9 @@ export default function Views() {
   });
 
   return (
-    <div className="views__wrapper">
+    <div
+      className="views__wrapper"
+    >
       {/* <Row>
         { headerCols }
       </Row> */}

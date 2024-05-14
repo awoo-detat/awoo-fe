@@ -8,5 +8,18 @@
       line-height: 90%;
       padding-top: 1rem;
     }
+
+    .day-header > .accordion-button {
+      background: #fffee1;
+      font-weight: bold;
+      font-size: 2rem;
+    }
+
+    .night-header > .accordion-button {
+      background: #9d92a9;
+      font-weight: bold;
+      color: white;
+      font-size: 2rem;
+    }
   }
 }
