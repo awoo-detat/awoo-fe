@@ -10,34 +10,72 @@
   &__night {
     // background: #00008b;
   }
+
+  .btn {
+    white-space: nowrap;
+  }
   
+  .no-left-margin {
+    margin-left: 0;
+    margin-bottom: 1rem;
+    display: table;
+  }
+
   &__wrapper {
     width: 100%;
     min-height: 600px;
     background-size: cover;
-    padding: 5rem;
+    padding: 5rem 5rem 5rem 10rem;
 
-    .role-card {
+    @media screen and (width <= 780px) {
+      padding: 1rem 1rem 1rem 5rem;
+      background-size: contain;
+    }
+
+    @media screen and (width <= 550px) {
+      padding: 0 0 0 2.5rem;
+    }
+
+    /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+    .flip-card {
+      background-color: transparent;
       width: 250px;
-      height: 370px;
-      background: #f8f7f7;
+      height: 350px;
+      perspective: 1000px; /* Remove this if you don't want the 3D effect */
       margin-bottom: 1rem;
+    }
+
+    /* This container is needed to position the front and back side */
+    .flip-card-inner {
       position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
 
-      &.front-view {
-        > img {
-          margin-top: 30%;
-          transition: transform 0.8s;
-          transform-style: preserve-3d;
-        }
-      }
+    /* Do an horizontal flip when you move the mouse over the flip box container */
+    .flip-card.show-front .flip-card-inner {
+      transform: rotateY(180deg);
+    }
 
-      > img {
-        width: 100%;
-        height: auto;
-        max-width: 250px;
-        margin: 0 auto 2rem auto;
-      }
+    /* Position the front and back side */
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden; /* Safari */
+      backface-visibility: hidden;
+      background-color: #f8f7f7;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position-y: center;
+    }
+
+    /* Style the back side */
+    .flip-card-back {
+      transform: rotateY(180deg);
     }
   }
 }

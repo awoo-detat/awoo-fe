@@ -2,13 +2,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Views from '../views/views.js';
 import Voting from '../voting/voting.js';
 import "@scss/diurnal.scss";
 import paper from '../../assets/paper.png';
-import { useCallback, useState } from 'react';
+import { useState, useMemo } from 'react';
 
 export default function Diurnal() {
   // eventually come from central state
@@ -29,6 +28,10 @@ export default function Diurnal() {
     }
   }
 
+  const roleCtaText = useMemo(() => {
+    return showFront ? 'Hide your role' : 'View your role';
+  }, [showFront]);
+
   return (
     <div
       className={`diurnal ${isNight ? 'diurnal__night' : ''}`}
@@ -47,38 +50,43 @@ export default function Diurnal() {
       >
         <Container>
           <Row className="align-items-flex-start">
-            <Col xs={3}>
-              <Card
-                className={`role-card ${showFront ? 'front-view' : ''}`}
-                style={{ width: '18rem' }}
+            <Col lg={4} md={12}>
+              <div
+                className={`flip-card ${showFront ? 'show-front' : ''}`}
               >
-                <Card.Img
-                  variant="top"
-                  src={cardImgUrl}
-                />
-              </Card>
+                <div className="flip-card-inner">
+                  <div
+                    className="flip-card-front"
+                    style={{ backgroundImage: "url(" + require('../../assets/BACK.jpg') + ")" }}
+                  />
+                  <div
+                    className="flip-card-back"
+                    style={{ backgroundImage: "url(" + require('../../assets/Werewolf.jpg') + ")" }}
+                  />
+                </div>
+              </div>
               <Container>
                 <Row className="align-items-center">
-                  <Col>
+                  <Col className="no-left-margin">
                     <Button
                       variant="primary"
                       onClick={toggleCardView}
                     >
-                      View your role
+                      {roleCtaText}
                     </Button>
                   </Col>
-                  <Col>
+                  <Col className="no-left-margin">
                     <Button
                       variant="primary"
                       onClick={handleShow}
                     >
-                      Show Views
+                      Show&nbsp;Views
                     </Button>
                   </Col>
                 </Row>
               </Container>
             </Col>
-            <Col>
+            <Col lg={8} md={12}>
               <Voting />
             </Col>
           </Row>
