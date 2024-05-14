@@ -6,19 +6,32 @@ import Card from 'react-bootstrap/Card';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Views from '../views/views.js';
 import "@scss/diurnal.scss";
+import paper from '../../assets/paper.png';
 import { useCallback, useState } from 'react';
 
 export default function Diurnal() {
   // eventually come from central state
   const [isNight, setIsNight] = useState(false);
-
+  const [showFront, setShowFront] = useState(false);
   const [showViews, setShowViews] = useState(false);
+  const [cardImgUrl, setCardImgUrl] = useState(require('../../assets/BACK.jpg'));
 
   const handleClose = () => setShowViews(false);
   const handleShow = () => setShowViews(true);
+  const toggleCardView = () => {
+    setShowFront(!showFront);
+    // eventually pull from state
+    if (showFront) {
+      setCardImgUrl(require('../../assets/BACK.jpg'));
+    } else {
+      setCardImgUrl(require('../../assets/Werewolf.jpg'));
+    }
+  }
 
   return (
-    <div className={`diurnal ${isNight ? 'diurnal__night' : ''}`}>
+    <div
+      className={`diurnal ${isNight ? 'diurnal__night' : ''}`}
+    >
       <Offcanvas show={showViews} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Views</Offcanvas.Title>
@@ -27,31 +40,45 @@ export default function Diurnal() {
           <Views />
         </Offcanvas.Body>
       </Offcanvas>
-      <div className="diurnal__wrapper">
+      <div
+        className="diurnal__wrapper"
+        style={{ backgroundImage: "url(" + paper + ")" }}
+      >
         <Container>
-          <Row>
-            <Col>
-              <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
-                <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                  </Card.Text>
-                  <Button variant="primary">Go somewhere</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button
-                variant="primary"
-                onClick={handleShow}
+          <Row className="align-items-center">
+            <Col xs={3}>
+              <Card
+                className={`role-card ${showFront ? 'front-view' : ''}`}
+                style={{ width: '18rem' }}
               >
-                Show Views
-              </Button>
+                <Card.Img
+                  variant="top"
+                  src={cardImgUrl}
+                />
+              </Card>
+              <Container>
+                <Row className="align-items-center">
+                  <Col>
+                    <Button
+                      variant="primary"
+                      onClick={toggleCardView}
+                    >
+                      View your role
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button
+                      variant="primary"
+                      onClick={handleShow}
+                    >
+                      Show Views
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+            <Col>
+              OTHER CONTENT RE: VOTING WILL APPEAR HERE
             </Col>
           </Row>
         </Container>
