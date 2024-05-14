@@ -11,8 +11,9 @@ export default function Home() {
   const { inProgress } = useSelector(({ game }) => game);
   const [userName, setUserNameFromInput] = useState(name);
   const dispatch = useDispatch();
-  const [isReady, socketMessage, send] = useContext(WebSocketContext);
+  const [isReady, socketMessage, ws] = useContext(WebSocketContext);
   console.log({ name });
+  const { id } = useSelector(({ user }) => user.localUser);
 
   const handleAPIClick = useCallback(async () => {
     const response = await getTodosTestAPI();
@@ -21,7 +22,8 @@ export default function Home() {
 
   const handleUpdateUser = useCallback(() => {
     dispatch(setUserName({ name: userName }));
-  }, [dispatch, userName]);
+    ws.onSetUserName(userName);
+  }, [dispatch, userName, ws]);
 
   const handleClearUser = useCallback(() => {
     dispatch(clearSession());
@@ -37,8 +39,8 @@ export default function Home() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log({ isReady, socketMessage, send });
-  }, [isReady, socketMessage, send]);
+    console.log({ isReady, socketMessage, ws });
+  }, [isReady, socketMessage, ws]);
 
   return (
     <div className="App">
