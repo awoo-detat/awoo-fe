@@ -11,6 +11,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@mocks/*": ["src/__mocks__"],
       "@routes/*": ["src/routes/*"],
+      "@scss/*": ["src/scss/*"],
       "slices/*": ["src/store/slices/*"]
     }
   },

@@ -4,13 +4,18 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "@store";
-import Home from "@routes/home";
+import Diurnal from "@routes/diurnal/diurnal.js";
+import Home from "@routes/home/home.js";
 import reportWebVitals from "./reportWebVitals";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/day",
+    element: <Diurnal />,
   },
 ]);
 
