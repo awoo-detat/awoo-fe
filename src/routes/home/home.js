@@ -1,15 +1,18 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
 import { getTodosTestAPI } from "@store/awoo-client/api";
-import { clearSession, setupUser } from "@slices/userSlice";
+import { clearSession, setUserName } from "@slices/userSlice";
 import { resetGame, startGame } from "../../store/slices/gameSlice";
+import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 
 export default function Home() {
   const { name } = useSelector(({ user }) => user.localUser);
   const { inProgress } = useSelector(({ game }) => game);
-  const [userName, setUserName] = useState(name);
+  const [userName, setUserNameFromInput] = useState(name);
   const dispatch = useDispatch();
+  const [isReady, socketMessage, send] = useContext(WebSocketContext);
+  console.log({ name });
 
   const handleAPIClick = useCallback(async () => {
     const response = await getTodosTestAPI();
@@ -17,12 +20,12 @@ export default function Home() {
   }, []);
 
   const handleUpdateUser = useCallback(() => {
-    dispatch(setupUser({ name: userName }));
+    dispatch(setUserName({ name: userName }));
   }, [dispatch, userName]);
 
   const handleClearUser = useCallback(() => {
     dispatch(clearSession());
-    setUserName("");
+    setUserNameFromInput("");
   }, [dispatch]);
 
   const handleStartGame = useCallback(() => {
@@ -33,11 +36,19 @@ export default function Home() {
     dispatch(resetGame());
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log({ isReady, socketMessage, send });
+  }, [isReady, socketMessage, send]);
+
   return (
     <div className="App">
       <header className="App-header">
         {!inProgress && (
-          <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserNameFromInput(e.target.value)}
+          />
         )}
         {name && <h3>Hi {name}!</h3>}
         {!name && (

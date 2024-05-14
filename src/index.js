@@ -6,7 +6,9 @@ import { Provider } from "react-redux";
 import store from "@store";
 import Desk from "@routes/desk/desk.js";
 import Home from "@routes/home/home.js";
+import { PersistGate } from "redux-persist/integration/react";
 import reportWebVitals from "./reportWebVitals";
+import { WebSocketProvider } from "./utils/apiClient/WSContenxt";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PersistGate loading={null} persistor={persistor}>
+        <WebSocketProvider>
+          <RouterProvider router={router} />
+        </WebSocketProvider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
