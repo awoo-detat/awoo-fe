@@ -2,7 +2,7 @@ import { useEffect, createContext, useRef, useMemo, useState } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserId } from "../../../store/slices/userSlice";
-import { setUsers } from "../../../store/slices/gameSlice";
+import { setRoles, setUsers } from "../../../store/slices/gameSlice";
 
 const WebSocketContext = createContext();
 
@@ -45,8 +45,13 @@ function WebSocketProvider({ children }) {
         case "alivePlayerList":
           dispatch(setUsers({ users: data.payload }));
           break;
-        case "rolesList":
+        case "rolesetList": {
+          const rolesetOptions = Object.keys(data.payload)?.map((role) => ({
+            ...data.payload[role],
+          }));
+          setRoles({ rolesetOptions });
           break;
+        }
         default:
           break;
       }
@@ -59,10 +64,6 @@ function WebSocketProvider({ children }) {
           playerName: userName,
         })
       );
-    };
-    socket.connect = () => {
-      console.log("connecting user to server");
-      socket.send(JSON.stringify({ messageType: "connect" }));
     };
     socket.leave = () => {
       console.log("removing user from server");

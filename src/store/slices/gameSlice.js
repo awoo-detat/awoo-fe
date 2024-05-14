@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const defaultState = {
   inProgress: false,
   users: [],
+  rolesetOptions: [],
 };
 
 export const gameSlice = createSlice({
@@ -17,9 +18,12 @@ export const gameSlice = createSlice({
     setUsers: (state, action) => {
       state.users = action.payload.users;
     },
+    setRoles: (state, action) => {
+      state.rolesetOptions = action.payload.rolesetOptions;
+    },
   },
 });
 
-export const { startGame, resetGame, setUsers } = gameSlice.actions;
+export const { startGame, resetGame, setUsers, setRoles } = gameSlice.actions;
 
 export default gameSlice.reducer;
