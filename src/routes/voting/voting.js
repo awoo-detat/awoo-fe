@@ -1,6 +1,6 @@
 import "@scss/voting.scss";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 // import { useCallback, useState } from 'react';
 
 export default function Voting() {
@@ -8,38 +8,33 @@ export default function Voting() {
 
   const listOfAlivePlayers = [
     {
-      name: 'Camille Kaniecki',
+      name: "Camille Kaniecki",
       numVotes: 0,
       voters: [],
     },
     {
-      name: 'Julia Kester',
+      name: "Julia Kester",
       numVotes: 0,
       voters: [],
     },
     {
-      name: 'Dan Conley',
+      name: "Dan Conley",
       numVotes: 2,
-      voters: [
-        'Julia Kester',
-        'Camille Kaniecki',
-      ],
+      voters: ["Julia Kester", "Camille Kaniecki"],
     },
     {
-      name: 'Jane Doe',
+      name: "Jane Doe",
       numVotes: 1,
-      voters: [
-        'John Doe',
-      ],
+      voters: ["John Doe"],
     },
     {
-      name: 'John Doe',
+      name: "John Doe",
       numVotes: 0,
       voters: [],
-    }
+    },
   ].sort((a, b) => b.numVotes - a.numVotes);
 
-  console.log('listOfAlivePlayers is', listOfAlivePlayers);
+  console.log("listOfAlivePlayers is", listOfAlivePlayers);
 
   const votingOptionsWithTallys = listOfAlivePlayers.map((item, idx) => {
     let formattedName;
@@ -49,15 +44,9 @@ export default function Voting() {
         : item.voters[0];
       formattedName = `${item.name} - ${item.numVotes} vote${ item.numVotes === 1 ? '' : 's'} from ${combinedVoters}`;
     } else {
-      formattedName = `${item.name} - 0 votes`; 
+      formattedName = `${item.name} - 0 votes`;
     }
-    return (
-      <Form.Check
-        type='radio'
-        label={`${formattedName}`}
-        name='voting-choice'
-      />
-    );
+    return <Form.Check type="radio" label={`${formattedName}`} name="voting-choice" />;
   });
 
   return (

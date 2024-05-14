@@ -1,0 +1,7 @@
+#ws-connection-status {
+  color: greenyellow;
+
+  &.disconnected {
+    color: red;
+  }
+}
