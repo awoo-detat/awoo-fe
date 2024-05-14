@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
 import { getTodosTestAPI } from "@store/awoo-client/api";
 import { clearSession, setupUser } from "@slices/userSlice";
+import { resetGame, startGame } from "../../store/slices/gameSlice";
 
 export default function Home() {
   const { name } = useSelector(({ user }) => user.localUser);
+  const { inProgress } = useSelector(({ game }) => game);
   const [userName, setUserName] = useState(name);
   const dispatch = useDispatch();
 
@@ -23,10 +25,20 @@ export default function Home() {
     setUserName("");
   }, [dispatch]);
 
+  const handleStartGame = useCallback(() => {
+    dispatch(startGame(true));
+  }, [dispatch]);
+
+  const handleResetGame = useCallback(() => {
+    dispatch(resetGame());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
+        {!inProgress && (
+          <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
+        )}
         {name && <h3>Hi {name}!</h3>}
         {!name && (
           <button type="button" onClick={handleUpdateUser}>
@@ -41,6 +53,16 @@ export default function Home() {
         {name && (
           <button type="button" onClick={handleClearUser}>
             Click me to reset the user
+          </button>
+        )}
+        {!inProgress && name && (
+          <button type="button" onClick={handleStartGame}>
+            Click me to start the game
+          </button>
+        )}
+        {inProgress && (
+          <button type="button" onClick={handleResetGame}>
+            Click me to reset the game
           </button>
         )}
         <button type="button" onClick={handleAPIClick}>
