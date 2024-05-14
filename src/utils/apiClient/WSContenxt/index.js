@@ -1,4 +1,4 @@
-import { useEffect, createContext, useRef, useCallback, useMemo, useState } from "react";
+import { useEffect, createContext, useRef, useMemo, useState } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserId } from "../../../store/slices/userSlice";
@@ -15,6 +15,7 @@ function WebSocketProvider({ children }) {
   useEffect(() => {
     /* WS initialization and cleanup */
     const socket = new WebSocket(`${config.baseUrl}?id=${id}`);
+    ws.current = socket;
     socket.onopen = (e) => {
       console.log("WS open", e);
       setIsReady(true);
@@ -25,6 +26,7 @@ function WebSocketProvider({ children }) {
     };
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      console.log("message received:", { data });
       setSocketMessage(JSON.parse(e.data));
       switch (data.messageType) {
         case "idSet":
@@ -34,15 +36,21 @@ function WebSocketProvider({ children }) {
           break;
       }
     };
+    socket.onSetUserName = (userName) => {
+      console.log("setting username on server to:", userName);
+      socket.send(
+        JSON.stringify({
+          messageType: "setName",
+          playerName: userName,
+        })
+      );
+    };
     return () => {
       socket.close();
     };
   }, []);
 
-  const providerVal = useMemo(
-    () => [isReady, socketMessage, ws.current?.send.bind(ws.current)],
-    [isReady, socketMessage]
-  );
+  const providerVal = useMemo(() => [isReady, socketMessage, ws.current], [isReady, socketMessage]);
 
   /* WS provider dom */
   /* subscribe and unsubscribe are the only required prop for the context */
