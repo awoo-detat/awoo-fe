@@ -72,14 +72,20 @@ export default function Home() {
     [rolesetOptions, dropdownRolesetValue]
   );
 
-  const alreadyJoined = useCallback(() => {
-    return users.find((user) => user.id === userId) !== undefined;
-  }, [userId, users]);
+  const startAGame = useCallback(() => {
+    handlePressPlay();
+    setIsFirstView(false);
+  }, [setIsFirstView, handlePressPlay]);
+
+  const alreadyJoined = useMemo(
+    () => users.find((user) => user.id === userId) !== undefined,
+    [userId, users]
+  );
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
       <Container className="login-wrapper">
-        {(isFirstView && !alreadyJoined) ? (
+        {isFirstView && !alreadyJoined ? (
           <Row>
             <Col>
               <img className="howling" src={howling} alt="Awooo" />
