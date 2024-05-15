@@ -161,18 +161,6 @@ export default function Home() {
                         Connect
                       </Button>
                     )}
-                    {users.length >= 1 && (
-                      <>
-                        <h3>Player list:</h3>
-                        <ListGroup>
-                          {users.map((user) => (
-                            <ListGroup.Item key={user.id} variant="Secondary">
-                              {user.name || user.id} {leaderId === user.id ? "👑" : ""}
-                            </ListGroup.Item>
-                          ))}
-                        </ListGroup>
-                      </>
-                    )}
                     {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
                     {!inProgress && rolesetOptions.length ? (
                       <div className="leader-view">
@@ -190,11 +178,18 @@ export default function Home() {
                       </FormSelect>
                     ) : null}
                     {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
-                    {/* {!inProgress && dropdownRolesetValue && (
-                      <Button onClick={handleSetRoleset} variant="secondary">
-                        Choose Roleset
-                      </Button>
-                    )} */}
+                    {users.length >= 1 && (
+                      <>
+                        <h3>Player list:</h3>
+                        <ListGroup>
+                          {users.map((user) => (
+                            <ListGroup.Item key={user.id} variant="Secondary">
+                              {user.name || user.id} {leaderId === user.id ? "👑" : ""}
+                            </ListGroup.Item>
+                          ))}
+                        </ListGroup>
+                      </>
+                    )}
                   </div>
                 </WebsocketStausIndicator>
               )}
