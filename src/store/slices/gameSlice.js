@@ -39,10 +39,22 @@ export const gameSlice = createSlice({
     setLeader: (state, action) => {
       state.leader = action.payload;
     },
+    changePhaseDetails: (state, action) => {
+      state.phase = action.payload.phase;
+      state.phaseCount = action.payload.phaseCount;
+      state.inProgress = true;
+    },
   },
 });
 
-export const { setGameInProgress, resetGame, setUsers, setRoles, setSelectedRoleset, setLeader } =
-  gameSlice.actions;
+export const {
+  setGameInProgress,
+  resetGame,
+  setUsers,
+  setRoles,
+  setSelectedRoleset,
+  setLeader,
+  changePhaseDetails,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;

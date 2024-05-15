@@ -20,13 +20,13 @@ export default function PageWrapper({ children }) {
   return (
     <>
       {children}
-      {showError && (
+      {showError ? (
         <ModalDialog className="error-modal">
           <ModalHeader>
             <ModalTitle>Modal Dialog</ModalTitle>
           </ModalHeader>
         </ModalDialog>
-      )}
+      ) : null}
     </>
   );
 }

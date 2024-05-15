@@ -10,6 +10,7 @@ import { resetGame, setGameInProgress } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
 import { FormSelect, Form } from "react-bootstrap";
+import { setUserName } from "@store/slices/userSlice";
 import fur from "../../assets/wild-animal-pattern-fur-texture.jpg";
 import howling from "../../assets/wolf-howl.png";
 
@@ -39,12 +40,12 @@ export default function Home() {
 
   const handleUpdateUser = useCallback(() => {
     ws.onSetUserName(userName);
-  }, [userName, ws]);
+    dispatch(setUserName({ name: userName }));
+  }, [dispatch, userName, ws]);
 
   const handleSetGameInProgress = useCallback(() => {
-    dispatch(setGameInProgress()); // TODO: do we need this? Can it just be based on the phase message?
     ws.setGameInProgress();
-  }, [dispatch, ws]);
+  }, [ws]);
 
   const handleResetGame = useCallback(() => {
     dispatch(resetGame());
@@ -60,27 +61,34 @@ export default function Home() {
     ws.connect();
   }, [ws]);
 
-  const handleSetRoleset = useCallback(() => {
-    console.log({ ws });
-    ws.setRoleset(dropdownRolesetValue);
-  }, [ws, dropdownRolesetValue]);
+  const handleSetRoleset = useCallback(
+    (e) => {
+      console.log("setting roleset", e.target.value);
+      setDropdownRolesetValue(e.target.value);
+      ws.setRoleset(e.target.value);
+    },
+    [ws]
+  );
 
   const rolesetDescription = useMemo(
     () => rolesetOptions.find((roleset) => roleset.name === dropdownRolesetValue)?.description,
     [rolesetOptions, dropdownRolesetValue]
   );
 
+  useEffect(() => {
+    if (!selectedRoleset && rolesetOptions.length) {
+      handleSetRoleset({ target: { value: rolesetDescription } });
+    }
+  }, [handleSetRoleset, rolesetDescription, rolesetOptions.length, selectedRoleset]);
+
   const startAGame = useCallback(() => {
     handlePressPlay();
     setIsFirstView(false);
   }, [setIsFirstView, handlePressPlay]);
 
-  const alreadyJoined = useMemo(
-    () => users.find((user) => user.id === userId),
-    [userId, users]
-  );
+  const alreadyJoined = useMemo(() => users.find((user) => user?.id === userId), [userId, users]);
 
-  const leaderId = useMemo(() => leader?.id ?? '', [leader]);
+  const leaderId = useMemo(() => leader?.id || "", [leader]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
@@ -102,6 +110,7 @@ export default function Home() {
                 <h3>Bye!</h3>
               ) : (
                 <WebsocketStausIndicator>
+                  {name && <h3>Hi {name}!</h3>}
                   <div id="content-wrapper">
                     {!inProgress && (
                       <Form.Control
@@ -111,7 +120,6 @@ export default function Home() {
                         onChange={(e) => setUserNameFromInput(e.target.value)}
                       />
                     )}
-                    {name && <h3>Hi {name}!</h3>}
                     {!name && (
                       <Button onClick={handleUpdateUser} variant="secondary">
                         Create user
@@ -162,7 +170,7 @@ export default function Home() {
                       </div>
                     ) : null}
                     {!inProgress && rolesetOptions.length ? (
-                      <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
+                      <FormSelect onChange={handleSetRoleset}>
                         {rolesetOptions.map((roleset) => (
                           <option key={roleset.name} value={roleset.name}>
                             {roleset.name}
@@ -171,11 +179,11 @@ export default function Home() {
                       </FormSelect>
                     ) : null}
                     {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
-                    {!inProgress && dropdownRolesetValue && (
+                    {/* {!inProgress && dropdownRolesetValue && (
                       <Button onClick={handleSetRoleset} variant="secondary">
                         Choose Roleset
                       </Button>
-                    )}
+                    )} */}
                   </div>
                 </WebsocketStausIndicator>
               )}
