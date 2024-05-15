@@ -7,7 +7,7 @@ import Views from '../views/views.js';
 import Tally from '../voting/tally.js';
 import Voting from '../voting/voting.js';
 import "@scss/diurnal.scss";
-import paper from '../../assets/paper.png';
+import paper3 from '../../assets/paper3.png';
 import { useState, useMemo } from 'react';
 import { useSelector } from "react-redux";
 
@@ -49,7 +49,7 @@ export default function Diurnal({ isDay }) {
       </Offcanvas>
       <div
         className="diurnal__wrapper"
-        style={{ backgroundImage: "url(" + paper + ")" }}
+        style={{ backgroundImage: "url(" + paper3 + ")" }}
       >
         <Container>
           <Row className="align-items-flex-start">

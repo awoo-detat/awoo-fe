@@ -1,7 +1,4 @@
-import "@scss/voting.scss";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import "@scss/tally.scss";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -28,25 +25,13 @@ export default function Tally({allUserData}) {
   });
 
   return (
-    <div className="voting__wrapper">
-      <Container>
-        <Row className="align-items-center">
-          <Col>
-            <h3>Village Rumors</h3>
-            <p><strong>Suspected to be a werewolf:</strong></p>
-          </Col>
-        </Row>
-        <Row className="align-items-center">
-          <Col>
-            <Form>
-              {votingOptionsWithTallys}
-              <Button variant="primary" type="submit">
-                Vote
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+    <div className="tally__wrapper">
+      <h3>Village Rumors</h3>
+      <p><strong>Suspected to be a werewolf:</strong></p>
+      {votingOptionsWithTallys}
+      <Button variant="primary" type="submit">
+        Vote
+      </Button>
     </div>
   );
 }
