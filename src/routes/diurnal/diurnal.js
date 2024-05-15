@@ -1,19 +1,21 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import Views from '../views/views.js';
-import Tally from '../voting/tally.js';
-import Voting from '../voting/voting.js';
-import "@scss/diurnal.scss";
-import paper3 from '../../assets/paper3.png';
-import { useState, useMemo } from 'react';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
+import Views from "../views/views.js";
+import Tally from "../voting/tally.js";
+import Voting from "../voting/voting.js";
+import "@scss/diurnal.scss";
+import paper3 from "../../assets/paper3.png";
 
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
 
+  const { role } = useSelector(({ user }) => user.localUser);
+  console.log({ role });
   // eventually come from central state
   const [showFront, setShowFront] = useState(false);
   const [showViews, setShowViews] = useState(false);
@@ -22,22 +24,18 @@ export default function Diurnal({ isDay }) {
   const handleShow = () => setShowViews(true);
   const toggleCardView = () => {
     setShowFront(!showFront);
-  }
+  };
 
-  const roleCtaText = useMemo(() => {
-    return showFront ? 'Hide your role' : 'View your role';
-  }, [showFront]);
-  
-  console.log('alluserdata is', allUserData);
-  const votingComponent = useMemo(() => {
-    return isDay
-      ? <Tally allUserData={allUserData} /> : <Voting allUserData={allUserData} />
-  }, [isDay]);
+  const roleCtaText = useMemo(() => (showFront ? "Hide your role" : "View your role"), [showFront]);
+
+  console.log("alluserdata is", allUserData);
+  const votingComponent = useMemo(
+    () => (isDay ? <Tally allUserData={allUserData} /> : <Voting allUserData={allUserData} />),
+    [isDay]
+  );
 
   return (
-    <div
-      className={`diurnal ${!isDay ? 'diurnal__night' : ''}`}
-    >
+    <div className={`diurnal ${!isDay ? "diurnal__night" : ""}`}>
       <Offcanvas show={showViews} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Views</Offcanvas.Title>
@@ -46,42 +44,31 @@ export default function Diurnal({ isDay }) {
           <Views />
         </Offcanvas.Body>
       </Offcanvas>
-      <div
-        className="diurnal__wrapper"
-        style={{ backgroundImage: "url(" + paper3 + ")" }}
-      >
+      <div className="diurnal__wrapper" style={{ backgroundImage: `url(${paper3})` }}>
         <Container>
           <Row className="align-items-flex-start">
             <Col lg={4} md={12}>
-              <div
-                className={`flip-card ${showFront ? 'show-front' : ''}`}
-              >
+              <div className={`flip-card ${showFront ? "show-front" : ""}`}>
                 <div className="flip-card-inner">
                   <div
                     className="flip-card-front"
-                    style={{ backgroundImage: "url(" + require('../../assets/BACK.jpg') + ")" }}
+                    style={{ backgroundImage: `url(${require("../../assets/BACK.jpg")})` }}
                   />
                   <div
                     className="flip-card-back"
-                    style={{ backgroundImage: "url(" + require(`../../assets/Werewolf.jpg`) + ")" }}
+                    style={{ backgroundImage: `url(${require(`../../assets/Werewolf.jpg`)})` }}
                   />
                 </div>
               </div>
               <Container>
                 <Row className="align-items-center">
                   <Col className="no-left-margin">
-                    <Button
-                      variant="primary"
-                      onClick={toggleCardView}
-                    >
+                    <Button variant="primary" onClick={toggleCardView}>
                       {roleCtaText}
                     </Button>
                   </Col>
                   <Col className="no-left-margin">
-                    <Button
-                      variant="primary"
-                      onClick={handleShow}
-                    >
+                    <Button variant="primary" onClick={handleShow}>
                       Show&nbsp;Views
                     </Button>
                   </Col>
@@ -89,8 +76,10 @@ export default function Diurnal({ isDay }) {
               </Container>
             </Col>
             <Col lg={8} md={12}>
-              <h1>{isDay ? 'Day' : 'Night'} { Math.round(phaseCount / 2)}</h1>
-              { votingComponent }
+              <h1>
+                {isDay ? "Day" : "Night"} {Math.round(phaseCount / 2)}
+              </h1>
+              {votingComponent}
             </Col>
           </Row>
         </Container>
