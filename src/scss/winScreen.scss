@@ -1,7 +1,8 @@
-.lose-screen {
-  background-image: url("../assets/bloody_and_hands.jpeg");
+.win-screen {
+  background-image: url("../assets/bloody_and_hands.jpeg"); // TODO: update
   background-repeat: no-repeat;
   background-size: 100%;
+  background-color: black;
   color: white;
   text-align: center;
   width: 100vw;
@@ -11,6 +12,6 @@
   flex-direction: column;
 }
 
-.lose {
+.win {
   margin-top: 200px;
 }

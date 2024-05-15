@@ -35,7 +35,8 @@ export default function Home() {
 
   const handleStartGame = useCallback(() => {
     dispatch(startGame(true));
-  }, [dispatch]);
+    ws.startGame();
+  }, [dispatch, ws]);
 
   const handleResetGame = useCallback(() => {
     dispatch(resetGame());
@@ -93,7 +94,7 @@ export default function Home() {
                   reset the user
                 </button>
               )}
-              {!inProgress && name && (
+              {!inProgress && name && rolesetOptions.length && (
                 <button type="button" onClick={handleStartGame}>
                   start the game
                 </button>
