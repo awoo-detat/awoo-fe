@@ -6,7 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
-import { clearSession, setUserName } from "@slices/userSlice";
+import { setUserName } from "@slices/userSlice";
 import { resetGame, setGameInProgress } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
@@ -24,7 +24,7 @@ export default function Home() {
   const [dropdownRolesetValue, setDropdownRolesetValue] = useState();
   const [userDisconnected, setUserDisconnected] = useState(false);
   const dispatch = useDispatch();
-  const [isReady, _, ws] = useContext(WebSocketContext);
+  const [isReady, _, ws, handlePressPlay] = useContext(WebSocketContext);
 
   useEffect(() => {
     if (!dropdownRolesetValue) {
@@ -42,12 +42,6 @@ export default function Home() {
     dispatch(setUserName({ name: userName }));
     ws.onSetUserName(userName);
   }, [dispatch, userName, ws]);
-
-  const handleClearUser = useCallback(() => {
-    dispatch(clearSession());
-    setUserNameFromInput("");
-    ws.leave();
-  }, [dispatch, ws]);
 
   const handleSetGameInProgress = useCallback(() => {
     dispatch(setGameInProgress()); // TODO: do we need this? Can it just be based on the phase message?
@@ -79,8 +73,9 @@ export default function Home() {
   );
 
   const startAGame = useCallback(() => {
+    handlePressPlay();
     setIsFirstView(false);
-  }, [setIsFirstView]);
+  }, [setIsFirstView, handlePressPlay]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
@@ -120,11 +115,6 @@ export default function Home() {
                     {name && !inProgress && (
                       <Button onClick={handleUpdateUser} variant="secondary">
                         Update user
-                      </Button>
-                    )}
-                    {name && !inProgress && (
-                      <Button onClick={handleClearUser} variant="secondary">
-                        Reset user
                       </Button>
                     )}
                     {!inProgress && name && rolesetOptions.length ? (
