@@ -39,9 +39,8 @@ export default function Home() {
   }, [dispatch, inProgress, phase]);
 
   const handleUpdateUser = useCallback(() => {
-    dispatch(setUserName({ name: userName }));
     ws.onSetUserName(userName);
-  }, [dispatch, userName, ws]);
+  }, [userName, ws]);
 
   const handleSetGameInProgress = useCallback(() => {
     dispatch(setGameInProgress()); // TODO: do we need this? Can it just be based on the phase message?
@@ -89,7 +88,7 @@ export default function Home() {
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
       <Container className="login-wrapper">
-        {isFirstView && !alreadyJoined ? (
+        {!userDisconnected && isFirstView && !alreadyJoined ? (
           <Row>
             <Col>
               <img className="howling" src={howling} alt="Awooo" />
