@@ -4,11 +4,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const defaultState = {
   inProgress: false,
   users: [],
-  phase: 'day',
+  phase: "day",
   phaseCount: 0,
   rolesetOptions: [],
   selectedRoleset: null,
-  phase: "myphase",
 };
 
 export const gameSlice = createSlice({
@@ -16,12 +15,13 @@ export const gameSlice = createSlice({
   initialState: {
     inProgress: false,
     users: [],
-    phase: 'day',
+    phase: "day",
     phaseCount: 0,
     rolesetOptions: [],
     selectedRoleset: null,
   },
-  reducers: { // actions
+  reducers: {
+    // actions
     startGame: (state) => {
       state.inProgress = true;
     },

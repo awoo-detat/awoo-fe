@@ -82,6 +82,10 @@ function WebSocketProvider({ children }) {
         })
       );
     };
+    socket.startGame = () => {
+      console.log("starting game");
+      socket.send(JSON.stringify({ messageType: "startGame" }));
+    };
     return () => {
       socket.close();
     };
