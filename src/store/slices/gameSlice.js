@@ -5,6 +5,7 @@ const defaultState = {
   inProgress: false,
   users: [],
   rolesetOptions: [],
+  selectedRoleset: null,
 };
 
 export const gameSlice = createSlice({
@@ -21,9 +22,12 @@ export const gameSlice = createSlice({
     setRoles: (state, action) => {
       state.rolesetOptions = action.payload.rolesetOptions;
     },
+    setSelectedRoleset: (state, action) => {
+      state.selectedRoleset = action.payload;
+    },
   },
 });
 
-export const { startGame, resetGame, setUsers, setRoles } = gameSlice.actions;
+export const { startGame, resetGame, setUsers, setRoles, setSelectedRoleset } = gameSlice.actions;
 
 export default gameSlice.reducer;

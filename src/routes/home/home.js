@@ -1,17 +1,20 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
 import { clearSession, setUserName } from "@slices/userSlice";
 import { resetGame, startGame } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
+import { FormSelect } from "react-bootstrap";
 
 export default function Home() {
-  const { name, id } = useSelector(({ user }) => user.localUser);
-  const { inProgress, users, rolesetOptions } = useSelector(({ game }) => game);
+  const { name } = useSelector(({ user }) => user.localUser);
+  const { inProgress, users, rolesetOptions, selectedRoleset } = useSelector(({ game }) => game);
   const [userName, setUserNameFromInput] = useState(name);
+  const [dropdownRolesetValue, setDropdownRolesetValue] = useState(rolesetOptions[0]?.name);
   const dispatch = useDispatch();
-  const [isReady, socketMessage, ws] = useContext(WebSocketContext);
+  const [isReady, _, ws] = useContext(WebSocketContext);
+  console.log({ selectedRoleset });
 
   const handleUpdateUser = useCallback(() => {
     dispatch(setUserName({ name: userName }));
@@ -39,9 +42,17 @@ export default function Home() {
     ws.connect();
   }, [ws]);
 
-  useEffect(() => {
-    console.log({ isReady, socketMessage, ws });
-  }, [isReady, socketMessage, ws]);
+  console.log({ ws });
+
+  const handleSetRoleset = useCallback(() => {
+    console.log({ ws });
+    ws.setRoleset(dropdownRolesetValue);
+  }, [ws, dropdownRolesetValue]);
+
+  const rolesetDescription = useMemo(
+    () => rolesetOptions.find((roleset) => roleset.name === dropdownRolesetValue)?.description,
+    [rolesetOptions, dropdownRolesetValue]
+  );
 
   return (
     <div className="App">
@@ -92,6 +103,22 @@ export default function Home() {
               </button>
             )}
             {users.length && users.map((user) => <p key={user.id}>{user.name}</p>)}
+            {rolesetOptions.length && <h3>You're the leader! Please choose a roleset:</h3>}
+            {rolesetOptions.length && (
+              <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
+                {rolesetOptions.map((roleset) => (
+                  <option key={roleset.name} value={roleset.name}>
+                    {roleset.name}
+                  </option>
+                ))}
+              </FormSelect>
+            )}
+            {rolesetDescription && <p>{rolesetDescription}</p>}
+            {dropdownRolesetValue && (
+              <button type="button" onClick={handleSetRoleset}>
+                Click me to set the roleset
+              </button>
+            )}
           </div>
         </WebsocketStausIndicator>
       </header>
