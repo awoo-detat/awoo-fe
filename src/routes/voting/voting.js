@@ -1,11 +1,22 @@
 import "@scss/voting.scss";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useMemo } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 
 export default function Voting({ allUserData }) {
   const { name: role } = useSelector(({ user }) => user.localUser?.role || "");
+  const [vote, setVote] = useState();
+  const [isReady, socketMessage, ws] = useContext(WebSocketContext);
+
+  const onVoteChange = useCallback((e) => {
+    setVote(e.target.id);
+  }, []);
+
+  const onSubmitVote = useCallback(() => {
+    ws.submitVote(vote);
+  }, [vote, ws]);
 
   const votingOptions = useMemo(
     () =>
@@ -16,9 +27,10 @@ export default function Voting({ allUserData }) {
           type="radio"
           label={user.name}
           name="voting-choice"
+          onChange={onVoteChange}
         />
       )),
-    [allUserData]
+    [allUserData, onVoteChange]
   );
 
   const actionText = useMemo(() => {
@@ -41,7 +53,7 @@ export default function Voting({ allUserData }) {
       <h3>{actionText}</h3>
       <Form>
         {votingOptions}
-        <Button variant="primary" type="submit">
+        <Button variant="primary" onClick={onSubmitVote} disabled={!vote}>
           Choose
         </Button>
       </Form>
