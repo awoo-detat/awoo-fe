@@ -7,14 +7,18 @@ import { useSelector } from "react-redux";
 export default function Voting({ allUserData }) {
   const { name: role } = useSelector(({ user }) => user.localUser?.role || "");
 
-  const votingOptions = allUserData.map((item) => (
-    <Form.Check
-      key={`action-choice-${item.name}`}
-      type="radio"
-      label={item.name}
-      name="voting-choice"
-    />
-  ));
+  const votingOptions = useMemo(
+    () =>
+      allUserData.map((user) => (
+        <Form.Check
+          key={`action-choice-${user.name}`}
+          type="radio"
+          label={user.name}
+          name="voting-choice"
+        />
+      )),
+    [allUserData]
+  );
 
   const actionText = useMemo(() => {
     switch (role) {

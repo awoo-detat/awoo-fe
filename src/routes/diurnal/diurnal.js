@@ -14,8 +14,6 @@ import paper3 from "../../assets/paper3.png";
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
 
-  const { role } = useSelector(({ user }) => user.localUser);
-  console.log({ role });
   // eventually come from central state
   const [showFront, setShowFront] = useState(false);
   const [showViews, setShowViews] = useState(false);
@@ -28,10 +26,9 @@ export default function Diurnal({ isDay }) {
 
   const roleCtaText = useMemo(() => (showFront ? "Hide your role" : "View your role"), [showFront]);
 
-  console.log("alluserdata is", allUserData);
   const votingComponent = useMemo(
     () => (isDay ? <Tally allUserData={allUserData} /> : <Voting allUserData={allUserData} />),
-    [isDay]
+    [allUserData, isDay]
   );
 
   return (
