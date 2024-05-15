@@ -1,10 +1,11 @@
 import "@scss/voting.scss";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-// import { useCallback, useState } from 'react';
+import { useMemo } from 'react';
 
 export default function Voting() {
   // TBD pull from API
+  const userRole = 'werewolf';
 
   const listOfAlivePlayers = [
     {
@@ -32,30 +33,34 @@ export default function Voting() {
       numVotes: 0,
       voters: [],
     },
-  ].sort((a, b) => b.numVotes - a.numVotes);
-
-  console.log("listOfAlivePlayers is", listOfAlivePlayers);
+  ];
 
   const votingOptionsWithTallys = listOfAlivePlayers.map((item, idx) => {
-    let formattedName;
-    if (item.numVotes > 0 && item.voters.length > 0) {
-      const combinedVoters = item.voters.length > 1
-        ? item.voters.join(', ')
-        : item.voters[0];
-      formattedName = `${item.name} - ${item.numVotes} vote${ item.numVotes === 1 ? '' : 's'} from ${combinedVoters}`;
-    } else {
-      formattedName = `${item.name} - 0 votes`;
-    }
-    return <Form.Check type="radio" label={`${formattedName}`} name="voting-choice" />;
+    return <Form.Check
+      key={`action-choice-${idx}`}
+      type="radio"
+      label={item.name}
+      name="voting-choice"
+    />;
   });
+
+  const actionText = useMemo(() => {
+    switch (userRole) {
+      case 'werewolf': return 'Who will you choose as your next victim?';
+      case 'seer': return 'Who will you choose to view?';
+      case 'sorcerer': return 'Who will you choose to view?';
+      case 'hunter': return 'Who will you choose to target?';
+      default: return 'Who do you feel is most suspicious?';
+    }
+  }, [userRole]);
 
   return (
     <div className="voting__wrapper">
-      <h2>Choose a sacrifice</h2>
+      <h2>{actionText}</h2>
       <Form>
         {votingOptionsWithTallys}
         <Button variant="primary" type="submit">
-          Submit
+          Choose
         </Button>
       </Form>
     </div>

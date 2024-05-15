@@ -12,7 +12,6 @@ export default function Home() {
   const [userName, setUserNameFromInput] = useState(name);
   const dispatch = useDispatch();
   const [isReady, socketMessage, ws] = useContext(WebSocketContext);
-  console.log({ name, id, users, rolesetOptions });
 
   const handleUpdateUser = useCallback(() => {
     dispatch(setUserName({ name: userName }));
