@@ -13,6 +13,10 @@ import { useSelector } from "react-redux";
 
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
+  const { name: userRole } = useSelector(({ user }) => {
+    console.log('localUser is', user.localUser);
+    return user.localUser?.role;
+});
 
   console.log('allUserData is', allUserData);
 
@@ -64,7 +68,7 @@ export default function Diurnal({ isDay }) {
                   />
                   <div
                     className="flip-card-back"
-                    style={{ backgroundImage: "url(" + require('../../assets/Werewolf.jpg') + ")" }}
+                    style={{ backgroundImage: "url(" + require(`../../assets/${userRole}.jpg`) + ")" }}
                   />
                 </div>
               </div>
