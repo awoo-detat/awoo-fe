@@ -8,11 +8,19 @@ const defaultState = {
   phaseCount: 0,
   rolesetOptions: [],
   selectedRoleset: null,
+  phase: "myphase",
 };
 
 export const gameSlice = createSlice({
   name: "game",
-  initialState: defaultState,
+  initialState: {
+    inProgress: false,
+    users: [],
+    phase: 'day',
+    phaseCount: 0,
+    rolesetOptions: [],
+    selectedRoleset: null,
+  },
   reducers: { // actions
     startGame: (state) => {
       state.inProgress = true;
@@ -26,10 +34,6 @@ export const gameSlice = createSlice({
     },
     setSelectedRoleset: (state, action) => {
       state.selectedRoleset = action.payload;
-    },
-    updatePhase: (state, action) => {
-      state.phase = action.payload.phase;
-      state.phaseCount = action.payload.count;
     },
   },
 });
