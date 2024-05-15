@@ -2,7 +2,7 @@ import { useEffect, createContext, useRef, useMemo, useState } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserId } from "../../../store/slices/userSlice";
-import { setRoles, setUsers } from "../../../store/slices/gameSlice";
+import { setRoles, setSelectedRoleset, setUsers } from "../../../store/slices/gameSlice";
 
 const WebSocketContext = createContext();
 
@@ -52,6 +52,10 @@ function WebSocketProvider({ children }) {
           dispatch(setRoles({ rolesetOptions }));
           break;
         }
+        case "rolesetSelected":
+          console.log("roleset selected:", data.payload);
+          dispatch(setSelectedRoleset(data.payload));
+          break;
         default:
           break;
       }

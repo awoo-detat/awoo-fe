@@ -9,12 +9,12 @@ import { FormSelect } from "react-bootstrap";
 
 export default function Home() {
   const { name } = useSelector(({ user }) => user.localUser);
-  const { inProgress, users, rolesetOptions } = useSelector(({ game }) => game);
+  const { inProgress, users, rolesetOptions, selectedRoleset } = useSelector(({ game }) => game);
   const [userName, setUserNameFromInput] = useState(name);
   const [dropdownRolesetValue, setDropdownRolesetValue] = useState(rolesetOptions[0]?.name);
   const dispatch = useDispatch();
   const [isReady, _, ws] = useContext(WebSocketContext);
-  console.log({ dropdownRolesetValue });
+  console.log({ selectedRoleset });
 
   const handleUpdateUser = useCallback(() => {
     dispatch(setUserName({ name: userName }));
