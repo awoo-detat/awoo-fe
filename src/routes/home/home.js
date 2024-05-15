@@ -10,7 +10,7 @@ import { clearSession, setUserName } from "@slices/userSlice";
 import { resetGame, setGameInProgress } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
-import { FormSelect } from "react-bootstrap";
+import { FormSelect, Form } from "react-bootstrap";
 import fur from "../../assets/wild-animal-pattern-fur-texture.jpg";
 import howling from "../../assets/wolf-howl.png";
 
@@ -107,8 +107,9 @@ export default function Home() {
                 <WebsocketStausIndicator>
                   <div id="content-wrapper">
                     {!inProgress && (
-                      <input
+                      <Form.Control
                         type="text"
+                        id="usernameInput"
                         value={userName}
                         onChange={(e) => setUserNameFromInput(e.target.value)}
                       />
@@ -180,7 +181,7 @@ export default function Home() {
                     {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
                     {!inProgress && dropdownRolesetValue && (
                       <Button onClick={handleSetRoleset} variant="secondary">
-                        Choose roleset
+                        Choose Roleset
                       </Button>
                     )}
                   </div>
