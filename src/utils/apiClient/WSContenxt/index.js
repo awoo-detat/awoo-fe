@@ -1,7 +1,7 @@
 import { useEffect, createContext, useRef, useMemo, useState, useCallback } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserId } from "../../../store/slices/userSlice";
+import { setUserId, setUserName } from "../../../store/slices/userSlice";
 import { setRoles, setSelectedRoleset, setUsers, setLeader } from "../../../store/slices/gameSlice";
 
 const WebSocketContext = createContext();
@@ -42,6 +42,10 @@ function WebSocketProvider({ children }) {
         switch (data.messageType) {
           case "idSet":
             dispatch(setUserId({ id: data.payload }));
+            break;
+          case "nameSet":
+            console.log("name set on server");
+            dispatch(setUserName({ name: data.payload }));
             break;
           case "playerJoin":
             console.log("A player joined!");
