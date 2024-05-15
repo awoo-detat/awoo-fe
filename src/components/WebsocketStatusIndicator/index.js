@@ -7,9 +7,9 @@ export default function WebsocketStausIndicator({ children }) {
 
   return (
     <div>
-      <p id="ws-connection-status" className={!isReady && "disconnected"}>
+      <h1 id="ws-connection-status" className={!isReady && "disconnected"}>
         {isReady ? "Connected" : "Disconnected"}
-      </p>
+      </h1>
       {children}
     </div>
   );
