@@ -55,6 +55,9 @@ function WebSocketProvider({ children }) {
           console.log("roleset selected:", data.payload);
           dispatch(setSelectedRoleset(data.payload));
           break;
+        case "error":
+          console.error("error received from server:", data.payload);
+          break;
         default:
           break;
       }
