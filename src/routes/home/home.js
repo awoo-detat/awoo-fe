@@ -86,6 +86,12 @@ export default function Home() {
     setIsFirstView(false);
   }, [setIsFirstView, handlePressPlay]);
 
+  console.log({ users, selectedRoleset });
+  const correctNumberOfPlayers = useMemo(
+    () => users?.length === selectedRoleset?.roles?.length,
+    [selectedRoleset?.roles?.length, users?.length]
+  );
+
   const alreadyJoined = useMemo(() => users.find((user) => user?.id === userId), [userId, users]);
 
   const leaderId = useMemo(() => leader?.id || "", [leader]);
@@ -116,7 +122,7 @@ export default function Home() {
                       <Form.Control
                         type="text"
                         id="usernameInput"
-                        value={userName}
+                        value={userName || name}
                         onChange={(e) => setUserNameFromInput(e.target.value)}
                       />
                     )}
@@ -131,8 +137,13 @@ export default function Home() {
                       </Button>
                     )}
                     {!inProgress && name && rolesetOptions.length ? (
-                      <Button onClick={handleSetGameInProgress} size="lg" variant="success">
-                        <strong>Start!</strong>
+                      <Button
+                        onClick={handleSetGameInProgress}
+                        size="lg"
+                        variant="secondary"
+                        disabled={!correctNumberOfPlayers}
+                      >
+                        Start!
                       </Button>
                     ) : null}
                     {inProgress && (
@@ -165,7 +176,7 @@ export default function Home() {
                     {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
                     {!inProgress && rolesetOptions.length ? (
                       <div className="leader-view">
-                            <h3>You’re the leader!</h3>
+                        <h3>You’re the leader!</h3>
                         <p>Choose a roleset:</p>
                       </div>
                     ) : null}

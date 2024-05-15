@@ -3,8 +3,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export default function Tally({allUserData}) {
-  console.log('alluserdata is', allUserData);
-  console.log(allUserData[0].name);
   const listOfAlivePlayers = (allUserData !== undefined && allUserData.length > 0 && allUserData[0].votes)
     ? allUserData.sort((a, b) => {
       if (a.votes !== undefined && b.votes !== undefined) {

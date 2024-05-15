@@ -13,12 +13,6 @@ import { useSelector } from "react-redux";
 
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
-//   const { name: userRole } = useSelector(({ user }) => {
-//     console.log('localUser is', user);
-//     return user?.localUser?.role || '';
-// });
-
-  // console.log('userRole is', userRole);
 
   // eventually come from central state
   const [showFront, setShowFront] = useState(false);
