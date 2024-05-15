@@ -11,23 +11,40 @@ import { WebSocketProvider } from "@utils/apiClient/WSContenxt";
 import WinScreen from "@components/WinScreen";
 import LoseScreen from "@components/LoseScreen";
 import reportWebVitals from "./reportWebVitals";
+import PageWrapper from "./components/PageWrapper";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <PageWrapper>
+        <Home />,
+      </PageWrapper>
+    ),
   },
   {
     path: "/game",
-    element: <Desk />,
+    element: (
+      <PageWrapper>
+        <Desk />
+      </PageWrapper>
+    ),
   },
   {
     path: "/win",
-    element: <WinScreen />,
+    element: (
+      <PageWrapper>
+        <WinScreen />
+      </PageWrapper>
+    ),
   },
   {
     path: "/lose",
-    element: <LoseScreen />,
+    element: (
+      <PageWrapper>
+        <LoseScreen />
+      </PageWrapper>
+    ),
   },
 ]);
 
