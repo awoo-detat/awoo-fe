@@ -86,7 +86,7 @@ function WebSocketProvider({ children }) {
         })
       );
     };
-    socket.startGame = () => {
+    socket.setGameInProgress = () => {
       console.log("starting game");
       socket.send(JSON.stringify({ messageType: "start" }));
     };

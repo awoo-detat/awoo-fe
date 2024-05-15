@@ -7,7 +7,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
 import { clearSession, setUserName } from "@slices/userSlice";
-import { resetGame, startGame } from "@store/slices/gameSlice";
+import { resetGame, setGameInProgress } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
 import { FormSelect } from "react-bootstrap";
@@ -17,7 +17,9 @@ import howling from "../../assets/wolf-howl.png";
 export default function Home() {
   const [isFirstView, setIsFirstView] = useState(true);
   const { name } = useSelector(({ user }) => user.localUser);
-  const { inProgress, users, rolesetOptions, selectedRoleset } = useSelector(({ game }) => game);
+  const { inProgress, users, rolesetOptions, selectedRoleset, phase } = useSelector(
+    ({ game }) => game
+  );
   const [userName, setUserNameFromInput] = useState(name);
   const [dropdownRolesetValue, setDropdownRolesetValue] = useState();
   const [userDisconnected, setUserDisconnected] = useState(false);
@@ -31,6 +33,12 @@ export default function Home() {
     }
   }, [rolesetOptions, dropdownRolesetValue]);
 
+  useEffect(() => {
+    if (!inProgress && phase) {
+      dispatch(setGameInProgress());
+    }
+  }, [dispatch, inProgress, phase]);
+
   const handleUpdateUser = useCallback(() => {
     dispatch(setUserName({ name: userName }));
     ws.onSetUserName(userName);
@@ -42,9 +50,9 @@ export default function Home() {
     ws.leave();
   }, [dispatch, ws]);
 
-  const handleStartGame = useCallback(() => {
-    dispatch(startGame(true));
-    ws.startGame();
+  const handlesetGameInProgress = useCallback(() => {
+    dispatch(setGameInProgress()); // TODO: do we need this? Can it just be based on the phase message?
+    ws.setGameInProgress();
   }, [dispatch, ws]);
 
   const handleResetGame = useCallback(() => {
@@ -122,7 +130,7 @@ export default function Home() {
                       </button>
                     )}
                     {!inProgress && name && rolesetOptions.length && (
-                      <button type="button" onClick={handleStartGame}>
+                      <button type="button" onClick={handlesetGameInProgress}>
                         start the game
                       </button>
                     )}
