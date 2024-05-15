@@ -2,7 +2,7 @@ import { useEffect, createContext, useRef, useMemo, useState } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserId } from "../../../store/slices/userSlice";
-import { setRoles, setUsers } from "../../../store/slices/gameSlice";
+import { setRoles, setSelectedRoleset, setUsers } from "../../../store/slices/gameSlice";
 
 const WebSocketContext = createContext();
 
@@ -49,9 +49,13 @@ function WebSocketProvider({ children }) {
           const rolesetOptions = Object.keys(data.payload)?.map((role) => ({
             ...data.payload[role],
           }));
-          setRoles({ rolesetOptions });
+          dispatch(setRoles({ rolesetOptions }));
           break;
         }
+        case "rolesetSelected":
+          console.log("roleset selected:", data.payload);
+          dispatch(setSelectedRoleset(data.payload));
+          break;
         default:
           break;
       }
@@ -69,6 +73,15 @@ function WebSocketProvider({ children }) {
       console.log("removing user from server");
       socket.send(JSON.stringify({ messageType: "quit" }));
       dispatch(setUserId({ id: null }));
+    };
+    socket.setRoleset = (rolesetName) => {
+      console.log("setting roleset on server to:", rolesetName);
+      socket.send(
+        JSON.stringify({
+          messageType: "setRoleset",
+          roleset: rolesetName,
+        })
+      );
     };
     return () => {
       socket.close();
