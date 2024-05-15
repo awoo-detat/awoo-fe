@@ -7,39 +7,11 @@ import { useSelector } from "react-redux";
 export default function Voting({ allUserData }) {
   const { role } = useSelector(({ user }) => user.localUser);
 
-  const listOfAlivePlayers = [
-    {
-      name: "Camille Kaniecki",
-      numVotes: 0,
-      voters: [],
-    },
-    {
-      name: "Julia Kester",
-      numVotes: 0,
-      voters: [],
-    },
-    {
-      name: "Dan Conley",
-      numVotes: 2,
-      voters: ["Julia Kester", "Camille Kaniecki"],
-    },
-    {
-      name: "Jane Doe",
-      numVotes: 1,
-      voters: ["John Doe"],
-    },
-    {
-      name: "John Doe",
-      numVotes: 0,
-      voters: [],
-    },
-  ] || allUserData;
-
-  const votingOptionsWithTallys = listOfAlivePlayers.map((item, idx) => {
+  const votingOptions = allUserData.map((item, idx) => {
     return <Form.Check
       key={`action-choice-${idx}`}
       type="radio"
-      label={item.name}
+      label={item.player.name}
       name="voting-choice"
     />;
   });
@@ -58,7 +30,7 @@ export default function Voting({ allUserData }) {
     <div className="voting__wrapper">
       <h2>{actionText}</h2>
       <Form>
-        {votingOptionsWithTallys}
+        {votingOptions}
         <Button variant="primary" type="submit">
           Choose
         </Button>
