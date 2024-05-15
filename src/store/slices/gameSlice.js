@@ -15,14 +15,14 @@ export const gameSlice = createSlice({
   initialState: {
     inProgress: false,
     users: [],
-    phase: "day",
+    phase: null,
     phaseCount: 0,
     rolesetOptions: [],
     selectedRoleset: null,
   },
   reducers: {
     // actions
-    startGame: (state) => {
+    setGameInProgress: (state) => {
       state.inProgress = true;
     },
     resetGame: () => defaultState,
@@ -38,6 +38,7 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { startGame, resetGame, setUsers, setRoles, setSelectedRoleset } = gameSlice.actions;
+export const { setGameInProgress, resetGame, setUsers, setRoles, setSelectedRoleset } =
+  gameSlice.actions;
 
 export default gameSlice.reducer;
