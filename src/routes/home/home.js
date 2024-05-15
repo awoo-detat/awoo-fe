@@ -76,7 +76,7 @@ export default function Home() {
   }, [setIsFirstView, handlePressPlay]);
 
   const alreadyJoined = useMemo(
-    () => users.find((user) => user.id === userId) !== undefined,
+    () => users.find((user) => user.id === userId),
     [userId, users]
   );
 
@@ -124,7 +124,7 @@ export default function Home() {
                     )}
                     {!inProgress && name && rolesetOptions.length ? (
                       <Button onClick={handleSetGameInProgress} size="lg" variant="secondary">
-                        Start!
+                        <strong>Start!</strong>
                       </Button>
                     ) : null}
                     {inProgress && (
