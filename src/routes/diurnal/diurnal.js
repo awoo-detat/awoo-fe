@@ -13,6 +13,7 @@ import paper3 from "../../assets/paper3.png";
 
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
+  const { role } = useSelector(({ user }) => user.localUser);
 
   // eventually come from central state
   const [showFront, setShowFront] = useState(false);
@@ -53,7 +54,7 @@ export default function Diurnal({ isDay }) {
                   />
                   <div
                     className="flip-card-back"
-                    style={{ backgroundImage: `url(${require(`../../assets/Werewolf.jpg`)})` }}
+                    style={{ backgroundImage: `url(${require(`../../assets/${role?.name}.jpg`)})` }}
                   />
                 </div>
               </div>
