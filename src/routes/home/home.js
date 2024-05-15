@@ -157,7 +157,7 @@ export default function Home() {
                     {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
                     {!inProgress && rolesetOptions.length ? (
                       <div className="leader-view">
-                        <h3>You're the leader!</h3>
+                            <h3>You’re the leader!</h3>
                         <p>Choose a roleset:</p>
                       </div>
                     ) : null}
