@@ -1,7 +1,7 @@
 import { useEffect, createContext, useRef, useMemo, useState, useCallback } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserId, setUserName } from "@store/slices/userSlice";
+import { setUserId, setUserName, setUserRole } from "@store/slices/userSlice";
 import {
   setRoles,
   setSelectedRoleset,
@@ -72,6 +72,7 @@ function WebSocketProvider({ children }) {
             break;
           case "roleAssigned":
             dispatch(setUserRole(data.payload));
+            break;
           case "leaderSet":
             dispatch(setLeader(data.payload));
             break;

@@ -86,6 +86,7 @@ export default function Home() {
     setIsFirstView(false);
   }, [setIsFirstView, handlePressPlay]);
 
+  console.log({ users, selectedRoleset });
   const correctNumberOfPlayers = useMemo(
     () => users?.length === selectedRoleset?.roles?.length,
     [selectedRoleset?.roles?.length, users?.length]
@@ -121,7 +122,7 @@ export default function Home() {
                       <Form.Control
                         type="text"
                         id="usernameInput"
-                        value={userName}
+                        value={userName || name}
                         onChange={(e) => setUserNameFromInput(e.target.value)}
                       />
                     )}
@@ -140,7 +141,7 @@ export default function Home() {
                         onClick={handleSetGameInProgress}
                         size="lg"
                         variant="secondary"
-                        disabled={correctNumberOfPlayers}
+                        disabled={!correctNumberOfPlayers}
                       >
                         Start!
                       </Button>
