@@ -15,7 +15,7 @@ export default function Home() {
   const [userDisconnected, setUserDisconnected] = useState(false);
   const dispatch = useDispatch();
   const [isReady, _, ws] = useContext(WebSocketContext);
-  console.log({ selectedRoleset });
+  console.log({ inProgress });
 
   useEffect(() => {
     if (!dropdownRolesetValue) {
@@ -41,6 +41,7 @@ export default function Home() {
 
   const handleResetGame = useCallback(() => {
     dispatch(resetGame());
+    // TODO: add a socket call
   }, [dispatch]);
 
   const handleDisconnect = useCallback(() => {
@@ -85,12 +86,12 @@ export default function Home() {
                   connect a user
                 </button>
               )}
-              {name && (
+              {name && !inProgress && (
                 <button type="button" onClick={handleUpdateUser}>
                   update user name
                 </button>
               )}
-              {name && (
+              {name && !inProgress && (
                 <button type="button" onClick={handleClearUser}>
                   reset the user
                 </button>
@@ -124,8 +125,10 @@ export default function Home() {
                 </>
               )}
               {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
-              {rolesetOptions.length && <h3>You're the leader! Please choose a roleset:</h3>}
-              {rolesetOptions.length && (
+              {!inProgress && rolesetOptions.length && (
+                <h3>You're the leader! Please choose a roleset:</h3>
+              )}
+              {!inProgress && rolesetOptions.length && (
                 <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
                   {rolesetOptions.map((roleset) => (
                     <option key={roleset.name} value={roleset.name}>
@@ -134,8 +137,8 @@ export default function Home() {
                   ))}
                 </FormSelect>
               )}
-              {rolesetDescription && <p>{rolesetDescription}</p>}
-              {dropdownRolesetValue && (
+              {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
+              {!inProgress && dropdownRolesetValue && (
                 <button type="button" onClick={handleSetRoleset}>
                   set the roleset
                 </button>
