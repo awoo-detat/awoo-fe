@@ -24,7 +24,22 @@
 
     @media screen and (width <= 780px) {
       padding: 2rem;
-      margin-top: 20rem;
+      margin-top: 27rem;
+    }
+
+    @media screen and (width <= 420px) {
+      padding: 2rem;
+      margin-top: 25rem;
+    }
+
+    @media screen and (width <= 415px) {
+      padding: 2rem;
+      margin-top: 30rem;
+    }
+
+    @media screen and (width <= 400px) {
+      padding: 2rem;
+      margin-top: 48rem;
     }
 
     /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
