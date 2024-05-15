@@ -37,7 +37,6 @@ export const gameSlice = createSlice({
       state.selectedRoleset = action.payload;
     },
     setLeader: (state, action) => {
-      console.log('action.payload is', action.payload);
       state.leader = action.payload;
     },
   },

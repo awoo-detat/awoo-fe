@@ -80,7 +80,7 @@ export default function Home() {
     [userId, users]
   );
 
-  const leaderId = useMemo(() => leader.id || "", [leader]);
+  const leaderId = useMemo(() => leader?.id ?? '', [leader]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
