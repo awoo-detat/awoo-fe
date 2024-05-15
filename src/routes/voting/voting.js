@@ -11,6 +11,7 @@ export default function Voting({ allUserData }) {
     () =>
       allUserData.map((user) => (
         <Form.Check
+          id={user.name}
           key={`action-choice-${user.name}`}
           type="radio"
           label={user.name}
