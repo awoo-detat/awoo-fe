@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { useSelector } from "react-redux";
 
 export default function Voting({ allUserData }) {
-  const { name: role } = useSelector(({ user }) => user.localUser?.role);
+  const { name: role } = useSelector(({ user }) => user.localUser?.role || '');
 
   const votingOptions = allUserData.map((item, idx) => {
     return <Form.Check

@@ -3,7 +3,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export default function Tally({allUserData}) {
-  const listOfAlivePlayers = allUserData.sort((a, b) => b.votes?.length - a.votes?.length);
+  const listOfAlivePlayers = (allUserData !== undefined && allUserData.length > 0 && allUserData[0].votes)
+    ? allUserData.sort((a, b) => {
+      if (a.votes !== undefined && b.votes !== undefined) {
+        return b.votes?.length - a.votes?.length;
+      }
+      return 0;
+    })
+    : allUserData;
 
   const votingOptionsWithTallys = listOfAlivePlayers.map((item, idx) => {
     let formattedName;
@@ -12,9 +19,9 @@ export default function Tally({allUserData}) {
         arr.push(vote.voter?.name);
         return arr;
       }, []).join(',');
-      formattedName = `${item.player?.name} - ${item.votes?.length} vote${item.votes?.length === 1 ? '' : 's'} from ${combinedVoters}`;
+      formattedName = `${item.name} - ${item.votes?.length} vote${item.votes?.length === 1 ? '' : 's'} from ${combinedVoters}`;
     } else {
-      formattedName = `${item.player?.name} - 0 votes`;
+      formattedName = `${item.name} - 0 votes`;
     }
     return <Form.Check
       key={`voting-choice-${idx}`}
