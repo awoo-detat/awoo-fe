@@ -2,11 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultState = {
-  localUser: {
-    name: null,
-    id: '00000000-0000-0000-0000-000000000000',
-    role: 'Villager',
-  },
+  localUser: {},
   remoteUsers: [],
 };
 
@@ -23,12 +19,9 @@ export const userSlice = createSlice({
     setUserRole: (state, action) => {
       state.localUser.role = action.payload.role;
     },
-    clearSession: (state) => {
-      state.localUser = defaultState.localUser;
-    },
   },
 });
 
-export const { setUserName, clearSession, setUserId, setUserRole } = userSlice.actions;
+export const { setUserName, setUserId, setUserRole } = userSlice.actions;
 
 export default userSlice.reducer;
