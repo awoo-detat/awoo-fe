@@ -123,7 +123,7 @@ export default function Home() {
                       </Button>
                     )}
                     {!inProgress && name && rolesetOptions.length ? (
-                      <Button onClick={handleSetGameInProgress} size="lg" variant="secondary">
+                      <Button onClick={handleSetGameInProgress} size="lg" variant="success">
                         <strong>Start!</strong>
                       </Button>
                     ) : null}
