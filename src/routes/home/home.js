@@ -11,7 +11,7 @@ import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
 import { FormSelect, Form } from "react-bootstrap";
 import { setUserName } from "@store/slices/userSlice";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import fur from "../../assets/wild-animal-pattern-fur-texture.jpg";
 import howling from "../../assets/wolf-howl.png";
 

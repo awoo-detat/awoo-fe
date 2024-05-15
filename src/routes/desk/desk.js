@@ -6,20 +6,17 @@ import { useSelector } from "react-redux";
 export default function Desk() {
   const { phase } = useSelector(({ game }) => game);
 
-  const isDay = useMemo(() => {
-    return phase === 'day';
-  }, [phase]);
+  const isDay = useMemo(() => phase === "day", [phase]);
 
   return (
     <div
       className="desk"
       style={{
+        // eslint-disable-next-line import/no-dynamic-require, global-require
         backgroundImage: `url("${require(`../../assets/village-${isDay ? "day" : "night"}.jpg`)}")`,
       }}
     >
-      <Diurnal
-        isDay={isDay}
-      />
+      <Diurnal isDay={isDay} />
     </div>
   );
 }

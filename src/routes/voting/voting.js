@@ -8,6 +8,7 @@ import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 export default function Voting({ allUserData }) {
   const { name: role } = useSelector(({ user }) => user.localUser?.role || "");
   const [vote, setVote] = useState();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isReady, socketMessage, ws] = useContext(WebSocketContext);
 
   const onVoteChange = useCallback((e) => {

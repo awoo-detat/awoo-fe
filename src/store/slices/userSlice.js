@@ -17,7 +17,7 @@ export const userSlice = createSlice({
       state.localUser.id = action.payload.id;
     },
     setUserRole: (state, action) => {
-      console.log('inside setUserRole action');
+      console.log("inside setUserRole action");
       state.localUser.role = action.payload;
     },
   },

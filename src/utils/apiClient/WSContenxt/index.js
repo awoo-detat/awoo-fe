@@ -123,7 +123,7 @@ function WebSocketProvider({ children }) {
         socket.close();
       };
     }
-  }, [pressedPlay]);
+  }, [pressedPlay, dispatch]); // do not add id to this dep array
 
   const providerVal = useMemo(
     () => [isReady, socketMessage, ws.current, handlePressPlay],

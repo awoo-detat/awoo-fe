@@ -51,10 +51,12 @@ export default function Diurnal({ isDay }) {
                 <div className="flip-card-inner">
                   <div
                     className="flip-card-front"
+                    // eslint-disable-next-line import/no-dynamic-require, global-require
                     style={{ backgroundImage: `url(${require("../../assets/BACK.jpg")})` }}
                   />
                   <div
                     className="flip-card-back"
+                    // eslint-disable-next-line import/no-dynamic-require, global-require
                     style={{ backgroundImage: `url(${require(`../../assets/${role?.name}.jpg`)})` }}
                   />
                 </div>
