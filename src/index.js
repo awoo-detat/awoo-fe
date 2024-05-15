@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/desk",
+    path: "/game",
     element: (
       <PageWrapper>
         <Desk />
