@@ -141,9 +141,9 @@ export default function Home() {
                         Connect
                       </Button>
                     )}
-                    {users.length && (
+                    {users.length >= 1 && (
                       <>
-                        <h4>Player list:</h4>
+                        <h3>Player list:</h3>
                         <ListGroup>
                           {users.map((user) => (
                             <ListGroup.Item key={user.id} variant="Secondary">
@@ -155,7 +155,10 @@ export default function Home() {
                     )}
                     {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
                     {!inProgress && rolesetOptions.length && (
-                      <h3>You're the leader! Please choose a roleset:</h3>
+                      <div className="leader-view">
+                        <h3>You're the leader!</h3>
+                        <p>Choose a roleset:</p>
+                      </div>
                     )}
                     {!inProgress && rolesetOptions.length && (
                       <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
@@ -168,9 +171,9 @@ export default function Home() {
                     )}
                     {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
                     {!inProgress && dropdownRolesetValue && (
-                      <button type="button" onClick={handleSetRoleset}>
-                        set the roleset
-                      </button>
+                      <Button onClick={handleSetRoleset} variant="secondary">
+                        Choose roleset
+                      </Button>
                     )}
                   </div>
                 </WebsocketStausIndicator>
