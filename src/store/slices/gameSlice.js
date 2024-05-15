@@ -40,8 +40,9 @@ export const gameSlice = createSlice({
       state.leader = action.payload;
     },
     changePhaseDetails: (state, action) => {
+      console.log("changing phase details", action.payload);
       state.phase = action.payload.phase;
-      state.phaseCount = action.payload.phaseCount;
+      state.phaseCount = action.payload.count;
       state.inProgress = true;
     },
   },

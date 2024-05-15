@@ -31,6 +31,7 @@ export default function Diurnal({ isDay }) {
     () => (isDay ? <Tally allUserData={allUserData} /> : <Voting allUserData={allUserData} />),
     [allUserData, isDay]
   );
+  console.log({ phaseCount });
 
   return (
     <div className={`diurnal ${!isDay ? "diurnal__night" : ""}`}>
@@ -45,7 +46,7 @@ export default function Diurnal({ isDay }) {
       <div className="diurnal__wrapper" style={{ backgroundImage: `url(${paper3})` }}>
         <Container>
           <Row className="align-items-flex-start">
-            <Col lg={4} md={12}>
+            <Col lg={4} md={12} className="card-and-buttons">
               <div className={`flip-card ${showFront ? "show-front" : ""}`}>
                 <div className="flip-card-inner">
                   <div
@@ -58,14 +59,14 @@ export default function Diurnal({ isDay }) {
                   />
                 </div>
               </div>
-              <Container>
+              <Container className="buttons-under-card">
                 <Row className="align-items-center">
-                  <Col className="no-left-margin">
+                  <Col className="even-spacing">
                     <Button variant="primary" onClick={toggleCardView}>
                       {roleCtaText}
                     </Button>
                   </Col>
-                  <Col className="no-left-margin">
+                  <Col className="even-spacing">
                     <Button variant="primary" onClick={handleShow}>
                       Show&nbsp;Views
                     </Button>
@@ -73,7 +74,7 @@ export default function Diurnal({ isDay }) {
                 </Row>
               </Container>
             </Col>
-            <Col lg={8} md={12}>
+            <Col lg={8} md={12} className="main-game-contents">
               <h1>
                 {isDay ? "Day" : "Night"} {Math.round(phaseCount / 2)}
               </h1>
