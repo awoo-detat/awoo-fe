@@ -6,34 +6,44 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 // import { useCallback, useState } from 'react';
 
-export default function Tally() {
+export default function Tally({allUserData}) {
   // TBD pull from API
 
   const listOfAlivePlayers = [
     {
+      id: '00000000-0000-0000-0000-000000000000',
       name: "Camille Kaniecki",
       numVotes: 0,
       voters: [],
+      alive: true,
     },
     {
+      id: '00000000-0000-0000-0000-000000000000',
       name: "Julia Kester",
       numVotes: 0,
       voters: [],
+      alive: true,
     },
     {
+      id: '00000000-0000-0000-0000-000000000000',
       name: "Dan Conley",
       numVotes: 2,
       voters: ["Julia Kester", "Camille Kaniecki"],
+      alive: true,
     },
     {
+      id: '00000000-0000-0000-0000-000000000000',
       name: "Jane Doe",
       numVotes: 1,
       voters: ["John Doe"],
+      alive: true,
     },
     {
+      id: '00000000-0000-0000-0000-000000000000',
       name: "John Doe",
       numVotes: 0,
       voters: [],
+      alive: true,
     },
   ].sort((a, b) => b.numVotes - a.numVotes);
 
@@ -74,7 +84,7 @@ export default function Tally() {
             </Form>
           </Col>
         </Row>
-        </Container>
+      </Container>
     </div>
   );
 }

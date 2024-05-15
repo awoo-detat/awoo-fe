@@ -4,12 +4,9 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 export default function Desk() {
-  const { phase } = useSelector(({ game }) => {
-    return game;
-  });
+  const { phase } = useSelector(({ game }) => game);
 
   const isDay = useMemo(() => {
-    console.log('+++ phase is', phase);
     return phase === 'day';
   }, [phase]);
 

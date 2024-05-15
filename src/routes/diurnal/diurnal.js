@@ -9,8 +9,13 @@ import Voting from '../voting/voting.js';
 import "@scss/diurnal.scss";
 import paper from '../../assets/paper.png';
 import { useState, useMemo } from 'react';
+import { useSelector } from "react-redux";
 
 export default function Diurnal({ isDay }) {
+  const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
+
+  console.log('allUserData is', allUserData);
+
   // eventually come from central state
   const [showFront, setShowFront] = useState(false);
   const [showViews, setShowViews] = useState(false);
@@ -26,7 +31,8 @@ export default function Diurnal({ isDay }) {
   }, [showFront]);
 
   const votingComponent = useMemo(() => {
-    return isDay ? <Tally /> : <Voting />
+    return isDay
+      ? <Tally allUserData={allUserData} /> : <Voting allUserData={allUserData} />
   }, [isDay]);
 
   return (
@@ -84,7 +90,7 @@ export default function Diurnal({ isDay }) {
               </Container>
             </Col>
             <Col lg={8} md={12}>
-              <h1>{ isDay ? 'Day' : 'Night'} 1</h1>
+              <h1>{isDay ? 'Day' : 'Night'} { Math.round(phaseCount / 2)}</h1>
               { votingComponent }
             </Col>
           </Row>
