@@ -64,6 +64,8 @@ function WebSocketProvider({ children }) {
             console.log("roleset selected:", data.payload);
             dispatch(setSelectedRoleset(data.payload));
             break;
+          case "roleAssigned":
+            dispatch(setUserRole(data.payload));
           case "leaderSet":
             dispatch(setLeader(data.payload));
             break;
