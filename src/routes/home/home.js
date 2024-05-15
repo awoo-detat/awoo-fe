@@ -11,6 +11,7 @@ import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
 import { FormSelect, Form } from "react-bootstrap";
 import { setUserName } from "@store/slices/userSlice";
+import { useNavigate, useNavigation } from "react-router-dom";
 import fur from "../../assets/wild-animal-pattern-fur-texture.jpg";
 import howling from "../../assets/wolf-howl.png";
 
@@ -25,6 +26,9 @@ export default function Home() {
   const [userDisconnected, setUserDisconnected] = useState(false);
   const dispatch = useDispatch();
   const [isReady, _, ws, handlePressPlay] = useContext(WebSocketContext);
+  const navigate = useNavigate();
+
+  console.log({ phase });
 
   useEffect(() => {
     if (!dropdownRolesetValue) {
@@ -36,7 +40,10 @@ export default function Home() {
     if (!inProgress && phase) {
       dispatch(setGameInProgress());
     }
-  }, [dispatch, inProgress, phase]);
+    if (phase) {
+      navigate("/game");
+    }
+  }, [dispatch, inProgress, navigate, phase]);
 
   const handleUpdateUser = useCallback(() => {
     ws.onSetUserName(userName);
