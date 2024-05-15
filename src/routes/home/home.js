@@ -17,7 +17,7 @@ import howling from "../../assets/wolf-howl.png";
 export default function Home() {
   const [isFirstView, setIsFirstView] = useState(true);
   const { name, id: userId } = useSelector(({ user }) => user.localUser);
-  const { inProgress, users, rolesetOptions, selectedRoleset, phase } = useSelector(
+  const { inProgress, users, rolesetOptions, selectedRoleset, phase, leader } = useSelector(
     ({ game }) => game
   );
   const [userName, setUserNameFromInput] = useState(name);
@@ -81,6 +81,10 @@ export default function Home() {
     () => users.find((user) => user.id === userId) !== undefined,
     [userId, users]
   );
+
+  const leaderId = useMemo(() => {
+    return leader.id || '';
+  }, leader);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
@@ -148,7 +152,7 @@ export default function Home() {
                         <ListGroup>
                           {users.map((user) => (
                             <ListGroup.Item key={user.id} variant="Secondary">
-                              {user.name || user.id}
+                              {user.name || user.id} {leaderId === user.id ? '👑' : '' }
                             </ListGroup.Item>
                           ))}
                         </ListGroup>
