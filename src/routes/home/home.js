@@ -25,7 +25,6 @@ export default function Home() {
   const [userDisconnected, setUserDisconnected] = useState(false);
   const dispatch = useDispatch();
   const [isReady, _, ws] = useContext(WebSocketContext);
-  console.log({ inProgress });
 
   useEffect(() => {
     if (!dropdownRolesetValue) {
@@ -50,7 +49,7 @@ export default function Home() {
     ws.leave();
   }, [dispatch, ws]);
 
-  const handlesetGameInProgress = useCallback(() => {
+  const handleSetGameInProgress = useCallback(() => {
     dispatch(setGameInProgress()); // TODO: do we need this? Can it just be based on the phase message?
     ws.setGameInProgress();
   }, [dispatch, ws]);
@@ -68,8 +67,6 @@ export default function Home() {
   const handleConnect = useCallback(() => {
     ws.connect();
   }, [ws]);
-
-  console.log({ ws });
 
   const handleSetRoleset = useCallback(() => {
     console.log({ ws });
@@ -130,11 +127,11 @@ export default function Home() {
                         Reset user
                       </Button>
                     )}
-                    {!inProgress && name && rolesetOptions.length && (
-                      <Button onClick={handleStartGame} size="lg" variant="secondary">
+                    {!inProgress && name && rolesetOptions.length ? (
+                      <Button onClick={handleSetGameInProgress} size="lg" variant="secondary">
                         Start!
                       </Button>
-                    )}
+                    ) : null}
                     {inProgress && (
                       <Button onClick={handleResetGame} variant="secondary">
                         Reset game
@@ -156,20 +153,20 @@ export default function Home() {
                         <ListGroup>
                           {users.map((user) => (
                             <ListGroup.Item key={user.id} variant="Secondary">
-                              {user.name ?? user.id}
+                              {user.name || user.id}
                             </ListGroup.Item>
                           ))}
                         </ListGroup>
                       </>
                     )}
                     {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
-                    {!inProgress && rolesetOptions.length && (
+                    {!inProgress && rolesetOptions.length ? (
                       <div className="leader-view">
                         <h3>You're the leader!</h3>
                         <p>Choose a roleset:</p>
                       </div>
-                    )}
-                    {!inProgress && rolesetOptions.length && (
+                    ) : null}
+                    {!inProgress && rolesetOptions.length ? (
                       <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
                         {rolesetOptions.map((roleset) => (
                           <option key={roleset.name} value={roleset.name}>
@@ -177,7 +174,7 @@ export default function Home() {
                           </option>
                         ))}
                       </FormSelect>
-                    )}
+                    ) : null}
                     {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
                     {!inProgress && dropdownRolesetValue && (
                       <Button onClick={handleSetRoleset} variant="secondary">
