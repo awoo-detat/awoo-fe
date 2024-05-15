@@ -31,11 +31,13 @@ export default function Home() {
   const handleClearUser = useCallback(() => {
     dispatch(clearSession());
     setUserNameFromInput("");
-  }, [dispatch]);
+    ws.leave();
+  }, [dispatch, ws]);
 
   const handleStartGame = useCallback(() => {
     dispatch(startGame(true));
-  }, [dispatch]);
+    ws.startGame();
+  }, [dispatch, ws]);
 
   const handleResetGame = useCallback(() => {
     dispatch(resetGame());
@@ -93,7 +95,7 @@ export default function Home() {
                   reset the user
                 </button>
               )}
-              {!inProgress && name && (
+              {!inProgress && name && rolesetOptions.length && (
                 <button type="button" onClick={handleStartGame}>
                   start the game
                 </button>
@@ -121,6 +123,7 @@ export default function Home() {
                   ))}
                 </>
               )}
+              {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
               {rolesetOptions.length && <h3>You're the leader! Please choose a roleset:</h3>}
               {rolesetOptions.length && (
                 <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
