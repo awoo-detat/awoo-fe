@@ -49,7 +49,7 @@ function WebSocketProvider({ children }) {
           const rolesetOptions = Object.keys(data.payload)?.map((role) => ({
             ...data.payload[role],
           }));
-          setRoles({ rolesetOptions });
+          dispatch(setRoles({ rolesetOptions }));
           break;
         }
         default:
@@ -69,6 +69,15 @@ function WebSocketProvider({ children }) {
       console.log("removing user from server");
       socket.send(JSON.stringify({ messageType: "quit" }));
       dispatch(setUserId({ id: null }));
+    };
+    socket.setRoleset = (rolesetName) => {
+      console.log("setting roleset on server to:", rolesetName);
+      socket.send(
+        JSON.stringify({
+          messageType: "setRoleset",
+          roleset: rolesetName,
+        })
+      );
     };
     return () => {
       socket.close();

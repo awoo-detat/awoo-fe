@@ -11,6 +11,8 @@ const persistConfig = {
   storage,
 };
 
+// TODO: don't persist the game slice
+
 const appReducer = combineReducers({
   counter: counterReducer,
   user: userReducer,
