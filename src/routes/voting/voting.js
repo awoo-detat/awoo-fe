@@ -28,7 +28,7 @@ export default function Voting({ allUserData }) {
 
   return (
     <div className="voting__wrapper">
-      <h2>{actionText}</h2>
+      <h3>{actionText}</h3>
       <Form>
         {votingOptions}
         <Button variant="primary" type="submit">
