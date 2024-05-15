@@ -115,39 +115,39 @@ export default function Home() {
                     )}
                     {name && <h3>Hi {name}!</h3>}
                     {!name && (
-                      <button type="button" onClick={handleUpdateUser}>
-                        connect a user
-                      </button>
+                      <Button onClick={handleUpdateUser} variant="secondary">
+                        Connect
+                      </Button>
                     )}
                     {name && !inProgress && (
-                      <button type="button" onClick={handleUpdateUser}>
-                        update user name
-                      </button>
+                      <Button onClick={handleUpdateUser} variant="secondary">
+                        Update user
+                      </Button>
                     )}
                     {name && !inProgress && (
-                      <button type="button" onClick={handleClearUser}>
-                        reset the user
-                      </button>
+                      <Button onClick={handleClearUser} variant="secondary">
+                        Reset user
+                      </Button>
                     )}
                     {!inProgress && name && rolesetOptions.length && (
-                      <button type="button" onClick={handlesetGameInProgress}>
-                        start the game
-                      </button>
+                      <Button onClick={handleStartGame} size="lg" variant="secondary">
+                        Start!
+                      </Button>
                     )}
                     {inProgress && (
-                      <button type="button" onClick={handleResetGame}>
-                        reset the game
-                      </button>
+                      <Button onClick={handleResetGame} variant="secondary">
+                        Reset game
+                      </Button>
                     )}
                     {isReady && (
-                      <button type="button" onClick={handleDisconnect}>
-                        disconnect from the WS
-                      </button>
+                      <Button onClick={handleDisconnect} variant="secondary">
+                        Disconnect
+                      </Button>
                     )}
                     {!isReady && (
-                      <button type="button" onClick={handleConnect}>
-                        connect to the WS
-                      </button>
+                      <Button onClick={handleConnect} variant="secondary">
+                        Connect
+                      </Button>
                     )}
                     {users.length && (
                       <>
