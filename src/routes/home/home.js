@@ -158,8 +158,10 @@ export default function Home() {
                     </>
                   )}
                   {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
-                  {rolesetOptions.length && <h3>You're the leader! Please choose a roleset:</h3>}
-                  {rolesetOptions.length && (
+                  {!inProgress && rolesetOptions.length && (
+                    <h3>You're the leader! Please choose a roleset:</h3>
+                  )}
+                  {!inProgress && rolesetOptions.length && (
                     <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
                       {rolesetOptions.map((roleset) => (
                         <option key={roleset.name} value={roleset.name}>
@@ -168,8 +170,8 @@ export default function Home() {
                       ))}
                     </FormSelect>
                   )}
-                  {rolesetDescription && <p>{rolesetDescription}</p>}
-                  {dropdownRolesetValue && (
+                  {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
+                  {!inProgress && dropdownRolesetValue && (
                     <button type="button" onClick={handleSetRoleset}>
                       set the roleset
                     </button>
