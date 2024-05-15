@@ -12,6 +12,7 @@ export default function Home() {
   const { inProgress, users, rolesetOptions, selectedRoleset } = useSelector(({ game }) => game);
   const [userName, setUserNameFromInput] = useState(name);
   const [dropdownRolesetValue, setDropdownRolesetValue] = useState(rolesetOptions[0]?.name);
+  const [userDisconnected, setUserDisconnected] = useState(false);
   const dispatch = useDispatch();
   const [isReady, _, ws] = useContext(WebSocketContext);
   console.log({ selectedRoleset });
@@ -35,6 +36,7 @@ export default function Home() {
   }, [dispatch]);
 
   const handleDisconnect = useCallback(() => {
+    setUserDisconnected(true);
     ws.leave();
   }, [ws]);
 
@@ -57,70 +59,74 @@ export default function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <WebsocketStausIndicator>
-          <div id="content-wrapper">
-            {!inProgress && (
-              <input
-                type="text"
-                value={userName}
-                onChange={(e) => setUserNameFromInput(e.target.value)}
-              />
-            )}
-            {name && <h3>Hi {name}!</h3>}
-            {!name && (
-              <button type="button" onClick={handleUpdateUser}>
-                Click me to connect a user
-              </button>
-            )}
-            {name && (
-              <button type="button" onClick={handleUpdateUser}>
-                Click me to update user name
-              </button>
-            )}
-            {name && (
-              <button type="button" onClick={handleClearUser}>
-                Click me to reset the user
-              </button>
-            )}
-            {!inProgress && name && (
-              <button type="button" onClick={handleStartGame}>
-                Click me to start the game
-              </button>
-            )}
-            {inProgress && (
-              <button type="button" onClick={handleResetGame}>
-                Click me to reset the game
-              </button>
-            )}
-            {isReady && (
-              <button type="button" onClick={handleDisconnect}>
-                Click me to disconnect from the WS
-              </button>
-            )}
-            {!isReady && (
-              <button type="button" onClick={handleConnect}>
-                Click me to connect to the WS
-              </button>
-            )}
-            {users.length && users.map((user) => <p key={user.id}>{user.name}</p>)}
-            {rolesetOptions.length && <h3>You're the leader! Please choose a roleset:</h3>}
-            {rolesetOptions.length && (
-              <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
-                {rolesetOptions.map((roleset) => (
-                  <option key={roleset.name} value={roleset.name}>
-                    {roleset.name}
-                  </option>
-                ))}
-              </FormSelect>
-            )}
-            {rolesetDescription && <p>{rolesetDescription}</p>}
-            {dropdownRolesetValue && (
-              <button type="button" onClick={handleSetRoleset}>
-                Click me to set the roleset
-              </button>
-            )}
-          </div>
-        </WebsocketStausIndicator>
+        {userDisconnected ? (
+          <h3>Bye!</h3>
+        ) : (
+          <WebsocketStausIndicator>
+            <div id="content-wrapper">
+              {!inProgress && (
+                <input
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserNameFromInput(e.target.value)}
+                />
+              )}
+              {name && <h3>Hi {name}!</h3>}
+              {!name && (
+                <button type="button" onClick={handleUpdateUser}>
+                  Click me to connect a user
+                </button>
+              )}
+              {name && (
+                <button type="button" onClick={handleUpdateUser}>
+                  Click me to update user name
+                </button>
+              )}
+              {name && (
+                <button type="button" onClick={handleClearUser}>
+                  Click me to reset the user
+                </button>
+              )}
+              {!inProgress && name && (
+                <button type="button" onClick={handleStartGame}>
+                  Click me to start the game
+                </button>
+              )}
+              {inProgress && (
+                <button type="button" onClick={handleResetGame}>
+                  Click me to reset the game
+                </button>
+              )}
+              {isReady && (
+                <button type="button" onClick={handleDisconnect}>
+                  Click me to disconnect from the WS
+                </button>
+              )}
+              {!isReady && (
+                <button type="button" onClick={handleConnect}>
+                  Click me to connect to the WS
+                </button>
+              )}
+              {users.length && users.map((user) => <p key={user.id}>{user.name}</p>)}
+              {rolesetOptions.length && <h3>You're the leader! Please choose a roleset:</h3>}
+              {rolesetOptions.length && (
+                <FormSelect onChange={(e) => setDropdownRolesetValue(e.target.value)}>
+                  {rolesetOptions.map((roleset) => (
+                    <option key={roleset.name} value={roleset.name}>
+                      {roleset.name}
+                    </option>
+                  ))}
+                </FormSelect>
+              )}
+              {rolesetDescription && <p>{rolesetDescription}</p>}
+              {dropdownRolesetValue && (
+                <button type="button" onClick={handleSetRoleset}>
+                  Click me to set the roleset
+                </button>
+              )}
+            </div>
+          </WebsocketStausIndicator>
+        )}
       </header>
     </div>
   );

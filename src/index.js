@@ -9,6 +9,7 @@ import Home from "@routes/home/home.js";
 import { PersistGate } from "redux-persist/integration/react";
 import reportWebVitals from "./reportWebVitals";
 import { WebSocketProvider } from "./utils/apiClient/WSContenxt";
+import WinScreen from "./components/WinScreen";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/desk",
     element: <Desk />,
+  },
+  {
+    path: "/win",
+    element: <WinScreen />,
   },
 ]);
 

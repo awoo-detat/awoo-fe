@@ -9,9 +9,8 @@ import { thunk } from "redux-thunk";
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["game"],
 };
-
-// TODO: don't persist the game slice
 
 const appReducer = combineReducers({
   counter: counterReducer,

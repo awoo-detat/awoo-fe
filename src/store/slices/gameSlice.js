@@ -6,6 +6,7 @@ const defaultState = {
   users: [],
   rolesetOptions: [],
   selectedRoleset: null,
+  phase: "myphase",
 };
 
 export const gameSlice = createSlice({

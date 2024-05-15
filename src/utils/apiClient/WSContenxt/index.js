@@ -40,7 +40,6 @@ function WebSocketProvider({ children }) {
           break;
         case "playerJoin":
           console.log("A player joined!");
-          // TODO: some other stuff
           break;
         case "alivePlayerList":
           dispatch(setUsers({ users: data.payload }));
