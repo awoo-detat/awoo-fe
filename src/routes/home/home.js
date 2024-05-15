@@ -16,7 +16,7 @@ import howling from "../../assets/wolf-howl.png";
 
 export default function Home() {
   const [isFirstView, setIsFirstView] = useState(true);
-  const { name } = useSelector(({ user }) => user.localUser);
+  const { name, id: userId } = useSelector(({ user }) => user.localUser);
   const { inProgress, users, rolesetOptions, selectedRoleset, phase } = useSelector(
     ({ game }) => game
   );
@@ -72,15 +72,14 @@ export default function Home() {
     [rolesetOptions, dropdownRolesetValue]
   );
 
-  const startAGame = useCallback(() => {
-    handlePressPlay();
-    setIsFirstView(false);
-  }, [setIsFirstView, handlePressPlay]);
+  const alreadyJoined = useCallback(() => {
+    return users.find((user) => user.id === userId) !== undefined;
+  }, [userId, users]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
       <Container className="login-wrapper">
-        {isFirstView ? (
+        {(isFirstView && !alreadyJoined) ? (
           <Row>
             <Col>
               <img className="howling" src={howling} alt="Awooo" />
@@ -109,7 +108,7 @@ export default function Home() {
                     {name && <h3>Hi {name}!</h3>}
                     {!name && (
                       <Button onClick={handleUpdateUser} variant="secondary">
-                        Connect
+                        Create user
                       </Button>
                     )}
                     {name && !inProgress && (

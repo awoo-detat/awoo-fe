@@ -58,4 +58,8 @@
   .leader-view {
     margin-top: 2rem;
   }
+
+  #usernameInput {
+    margin-bottom: 1rem;
+  }
 }
