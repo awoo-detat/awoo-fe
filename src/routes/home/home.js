@@ -79,8 +79,6 @@ export default function Home() {
   );
 
   const alreadyJoined = useCallback(() => {
-    console.log('userId is', userId);
-    console.log('users is', users);
     return users.find((user) => user.id === userId) !== undefined;
   }, [userId, users]);
 
