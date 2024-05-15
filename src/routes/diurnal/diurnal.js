@@ -13,12 +13,12 @@ import { useSelector } from "react-redux";
 
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
-  const { name: userRole } = useSelector(({ user }) => {
-    console.log('localUser is', user.localUser);
-    return user.localUser?.role;
-});
+//   const { name: userRole } = useSelector(({ user }) => {
+//     console.log('localUser is', user);
+//     return user?.localUser?.role || '';
+// });
 
-  console.log('allUserData is', allUserData);
+  // console.log('userRole is', userRole);
 
   // eventually come from central state
   const [showFront, setShowFront] = useState(false);
@@ -33,7 +33,8 @@ export default function Diurnal({ isDay }) {
   const roleCtaText = useMemo(() => {
     return showFront ? 'Hide your role' : 'View your role';
   }, [showFront]);
-
+  
+  console.log('alluserdata is', allUserData);
   const votingComponent = useMemo(() => {
     return isDay
       ? <Tally allUserData={allUserData} /> : <Voting allUserData={allUserData} />
@@ -68,7 +69,7 @@ export default function Diurnal({ isDay }) {
                   />
                   <div
                     className="flip-card-back"
-                    style={{ backgroundImage: "url(" + require(`../../assets/${userRole}.jpg`) + ")" }}
+                    style={{ backgroundImage: "url(" + require(`../../assets/Werewolf.jpg`) + ")" }}
                   />
                 </div>
               </div>
