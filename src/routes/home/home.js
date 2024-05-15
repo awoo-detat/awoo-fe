@@ -6,7 +6,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
-import { setUserName } from "@slices/userSlice";
 import { resetGame, setGameInProgress } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
 import WebsocketStausIndicator from "@components/WebsocketStatusIndicator";
@@ -81,9 +80,7 @@ export default function Home() {
     [userId, users]
   );
 
-  const leaderId = useMemo(() => {
-    return leader.id || '';
-  }, leader);
+  const leaderId = useMemo(() => leader.id || "", [leader]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
@@ -151,7 +148,7 @@ export default function Home() {
                         <ListGroup>
                           {users.map((user) => (
                             <ListGroup.Item key={user.id} variant="Secondary">
-                              {user.name || user.id} {leaderId === user.id ? '👑' : '' }
+                              {user.name || user.id} {leaderId === user.id ? "👑" : ""}
                             </ListGroup.Item>
                           ))}
                         </ListGroup>
