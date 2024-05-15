@@ -4,37 +4,34 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Views from '../views/views.js';
+import Tally from '../voting/tally.js';
 import Voting from '../voting/voting.js';
 import "@scss/diurnal.scss";
-import paper2 from '../../assets/paper2.png';
+import paper from '../../assets/paper.png';
 import { useState, useMemo } from 'react';
 
-export default function Diurnal() {
+export default function Diurnal({ isDay }) {
   // eventually come from central state
-  const [isNight, setIsNight] = useState(false);
   const [showFront, setShowFront] = useState(false);
   const [showViews, setShowViews] = useState(false);
-  const [cardImgUrl, setCardImgUrl] = useState(require('../../assets/BACK.jpg'));
 
   const handleClose = () => setShowViews(false);
   const handleShow = () => setShowViews(true);
   const toggleCardView = () => {
     setShowFront(!showFront);
-    // eventually pull from state
-    if (showFront) {
-      setCardImgUrl(require('../../assets/BACK.jpg'));
-    } else {
-      setCardImgUrl(require('../../assets/Werewolf.jpg'));
-    }
   }
 
   const roleCtaText = useMemo(() => {
     return showFront ? 'Hide your role' : 'View your role';
   }, [showFront]);
 
+  const votingComponent = useMemo(() => {
+    return isDay ? <Tally /> : <Voting />
+  }, [isDay]);
+
   return (
     <div
-      className={`diurnal ${isNight ? 'diurnal__night' : ''}`}
+      className={`diurnal ${!isDay ? 'diurnal__night' : ''}`}
     >
       <Offcanvas show={showViews} onHide={handleClose}>
         <Offcanvas.Header closeButton>
@@ -46,7 +43,7 @@ export default function Diurnal() {
       </Offcanvas>
       <div
         className="diurnal__wrapper"
-        style={{ backgroundImage: "url(" + paper2 + ")" }}
+        style={{ backgroundImage: "url(" + paper + ")" }}
       >
         <Container>
           <Row className="align-items-flex-start">
@@ -87,8 +84,8 @@ export default function Diurnal() {
               </Container>
             </Col>
             <Col lg={8} md={12}>
-              <h1>Day 1</h1>
-              <Voting />
+              <h1>{ isDay ? 'Day' : 'Night'} 1</h1>
+              { votingComponent }
             </Col>
           </Row>
         </Container>

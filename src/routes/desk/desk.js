@@ -1,15 +1,19 @@
 import Diurnal from "@routes/diurnal/diurnal.js";
 import "@scss/desk.scss";
-import villageDay from '../../assets/village-day.jpg';
-import villageNight from '../../assets/village-night.jpg';
+import { useState } from 'react';
 
 export default function Desk() {
+  // todo will come from state
+  const [isDay, setIsDay] = useState(true);
+
   return (
     <div
       className={'desk'}
-      style={{ backgroundImage: "url(" + villageDay + ")" }}
+      style={{ backgroundImage: `url("${require(`../../assets/village-${isDay ? 'day' : 'night'}.jpg`)}")` }}
     >
-      <Diurnal />
+      <Diurnal
+        isDay={isDay}
+      />
     </div>
   );
 }
