@@ -12,10 +12,16 @@ const persistConfig = {
   blacklist: ["game"],
 };
 
+const gameConfig = {
+  key: "game",
+  storage,
+  whitelist: ["inProgress"],
+};
+
 const appReducer = combineReducers({
   counter: counterReducer,
   user: userReducer,
-  game: gameReducer,
+  game: persistReducer(gameConfig, gameReducer),
 });
 
 const persistedReducer = persistReducer(persistConfig, appReducer);

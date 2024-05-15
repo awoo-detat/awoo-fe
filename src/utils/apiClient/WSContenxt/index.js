@@ -58,6 +58,7 @@ function WebSocketProvider({ children }) {
         case "error":
           console.error("error received from server:", data.payload);
           break;
+        // TODO: name set message
         default:
           break;
       }
