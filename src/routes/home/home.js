@@ -100,11 +100,13 @@ export default function Home() {
   );
 
   const alreadyJoined = useMemo(() => {
-    console.log("users is", users);
     return users.find((user) => user?.id === userId);
   }, [userId, users]);
 
-  const leaderId = useMemo(() => leader?.id || "", [leader]);
+  const leaderId = useMemo(() => {
+    const leaderIsInGame = users.find((user) => user?.id === leader.id);
+    return leaderIsInGame ? leader?.id || null : null;
+  }, [leader]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
