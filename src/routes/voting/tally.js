@@ -64,7 +64,7 @@ export default function Tally({ allUserData }) {
 
   return (
     <div className="tally__wrapper">
-      {role.alive ? <h3>Village Rumors</h3> : null}
+      {role?.alive ? <h3>Village Rumors</h3> : null}
       <p>
         <strong>Suspected to be a werewolf:</strong>
       </p>
