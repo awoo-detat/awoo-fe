@@ -57,16 +57,22 @@ export default function Diurnal({ isDay }) {
             <Col lg={4} md={12} className="card-and-buttons">
               <div className={`flip-card ${showFront ? "show-front" : ""}`}>
                 <div className="flip-card-inner">
-                  <div
-                    className="flip-card-front"
-                    // eslint-disable-next-line import/no-dynamic-require, global-require
-                    style={{ backgroundImage: `url(${require("../../assets/BACK.jpg")})` }}
-                  />
-                  <div
-                    className="flip-card-back"
-                    // eslint-disable-next-line import/no-dynamic-require, global-require
-                    style={{ backgroundImage: `url(${require(`../../assets/${role?.name}.jpg`)})` }}
-                  />
+                  {role ? (
+                    <>
+                      <div
+                        className="flip-card-front"
+                        // eslint-disable-next-line import/no-dynamic-require, global-require
+                        style={{ backgroundImage: `url(${require("../../assets/BACK.jpg")})` }}
+                      />
+                      <div
+                        className="flip-card-back"
+                        // eslint-disable-next-line import/no-dynamic-require, global-require
+                        style={{
+                          backgroundImage: `url(${require(`../../assets/${role?.name}.jpg`)})`,
+                        }}
+                      />
+                    </>
+                  ) : null}
                 </div>
               </div>
               <Container className="buttons-under-card">
