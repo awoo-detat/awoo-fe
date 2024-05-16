@@ -3,11 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import LoseScreen from "@components/LoseScreen";
 import WinScreen from "@components/WinScreen";
-import Tally from "../voting/tally";
 
 export default function GameOver() {
   const navigate = useNavigate();
-  const { users: allUserData } = useSelector(({ game }) => game);
 
   const { gameOverDetails } = useSelector(({ game }) => game);
   const { winner: winningTeam } = gameOverDetails || {};
