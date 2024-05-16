@@ -44,7 +44,7 @@ export default function Diurnal({ isDay }) {
   return (
     <div className={`diurnal ${!isDay ? "diurnal__night" : ""}`}>
       <Offcanvas show={showViews} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
+        <Offcanvas.Header closeButton closeVariant='white'>
           <Offcanvas.Title>Views</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
