@@ -5,42 +5,42 @@ import { useCallback, useContext, useState } from "react";
 import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 
 export default function Tally({ allUserData }) {
-  const [, , ws] = useContext(WebSocketContext);
+  const [ws] = useContext(WebSocketContext);
   const [vote, setVote] = useState();
 
-  const onVoteChange = useCallback(
-    (id) => () => {
-      console.log("id is", id);
-      setVote(id);
-    },
-    []
-  );
+  const onVoteChange = useCallback((id) => () => {
+    setVote(id);
+    }, []);
 
   const onSubmitVote = useCallback(() => {
     ws.submitVote(vote);
   }, [vote, ws]);
 
-  const listOfAlivePlayers =
-    allUserData !== undefined && allUserData.length > 0 && allUserData[0].votes
-      ? allUserData.sort((a, b) => {
+  const updatedUserData = [ ...allUserData ];
+
+  let listOfAlivePlayers =
+    updatedUserData !== undefined && updatedUserData.length > 0 && updatedUserData?.some((user) => {
+      return user.votes.length > 0;
+      })
+      ? updatedUserData.sort((a, b) => {
           if (a.votes !== undefined && b.votes !== undefined) {
-            return (b.votes?.length || 0) - (a.votes?.length || 0);
+            return (b.votes?.length) - (a.votes?.length);
           }
           return 0;
         })
-      : allUserData;
+      : updatedUserData;
 
-  const votingOptionsWithTallys = listOfAlivePlayers.map(({ id, name, votes }) => {
+  const votingOptionsWithTallys = listOfAlivePlayers.map(({id, name, votes}) => {
     let formattedName;
     const identifier = name.length > 0 ? name : id;
-    if (votes?.length > 0) {
+    if (votes !== undefined && votes.length > 0) {
       const combinedVoters = votes
         ?.reduce((arr, vote) => {
           arr.push(vote.voter?.name);
           return arr;
         }, [])
         .join(",");
-      formattedName = `${identifier} - ${votes?.length} vote${votes?.length === 1 ? "" : "s"} from ${combinedVoters}`;
+      formattedName = `${identifier} - ${votes.length || 0} vote${votes?.length === 1 ? "" : "s"} from ${combinedVoters}`;
     } else {
       formattedName = `${identifier} - 0 votes`;
     }
@@ -51,7 +51,7 @@ export default function Tally({ allUserData }) {
         type="radio"
         label={formattedName}
         name="voting-choice"
-        onChange={onVoteChange}
+        onChange={onVoteChange(id)}
       />
     );
   });
@@ -63,7 +63,11 @@ export default function Tally({ allUserData }) {
         <strong>Suspected to be a werewolf:</strong>
       </p>
       {votingOptionsWithTallys}
-      <Button variant="primary" type="submit" onClick={onSubmitVote} disabled={!vote}>
+      <Button
+        variant="primary"
+        type="submit"
+        onClick={onSubmitVote}
+      >
         Vote
       </Button>
     </div>

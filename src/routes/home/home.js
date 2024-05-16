@@ -99,7 +99,10 @@ export default function Home() {
     [selectedRoleset?.roles?.length, users?.length]
   );
 
-  const alreadyJoined = useMemo(() => users.find((user) => user?.id === userId), [userId, users]);
+  const alreadyJoined = useMemo(() => {
+    console.log('users is', users);
+    return users.find((user) => user?.id === userId), [userId, users]
+  });
 
   const leaderId = useMemo(() => leader?.id || "", [leader]);
 

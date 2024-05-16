@@ -8,6 +8,7 @@ import {
   setUsers,
   setLeader,
   changePhaseDetails,
+  setUserTallies,
 } from "@store/slices/gameSlice";
 
 const WebSocketContext = createContext();
@@ -80,6 +81,8 @@ function WebSocketProvider({ children }) {
           case "phaseChanged":
             dispatch(changePhaseDetails(data.payload));
             break;
+          case "tallyChanged":
+            dispatch(setUserTallies(data.payload));
           case "error":
             console.error("error received from server:", data.payload);
             break;
