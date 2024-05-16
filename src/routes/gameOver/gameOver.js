@@ -29,6 +29,8 @@ export default function GameOver() {
     setShowAllCards(true);
   };
 
+  console.log({ gameOverDetails });
+
   const allUsersAndRoles = useMemo(
     () =>
       gameOverDetails.roles?.map((role) => (
@@ -44,8 +46,8 @@ export default function GameOver() {
                   />
                   <div
                     className="flip-card-back"
-                    // eslint-disable-next-line import/no-dynamic-require, global-require
                     style={{
+                      // eslint-disable-next-line import/no-dynamic-require, global-require
                       backgroundImage: `url(${require(`../../assets/${role?.role?.name}.jpg`)})`,
                     }}
                   />
