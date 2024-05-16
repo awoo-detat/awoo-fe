@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Accordion from "react-bootstrap/Accordion";
 import { useSelector } from "react-redux";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 export default function Views() {
   // const listOfAccordionIds = [];
@@ -19,6 +19,18 @@ export default function Views() {
     }
     return initialCount;
   }, [views]);
+
+  const getMessage = useCallback(({ Hit, Attribute, Role }) => {
+    console.log({ Hit, Attribute, Role });
+    let message = Role?.name || Attribute;
+    if (message === "Max Evil") {
+      message = "Werewolf";
+    }
+    if (!Hit) {
+      message = `Not ${message}`;
+    }
+    return message;
+  }, []);
 
   const accordionRows = useMemo(() => {
     const rows = new Array(numOfViews).fill(undefined);
@@ -43,16 +55,7 @@ export default function Views() {
                     <Col>
                       <strong>{view?.Player?.name}</strong>
                     </Col>
-                    <Col>
-                      {view?.Hit
-                        ? view?.Attribute === "Max Evil"
-                          ? "Werewolf"
-                          : view?.Attribute === "Max Evil"
-                        : view?.Attribute === "Max Evil"
-                          ? "Not Werewolf"
-                          : `Not ${view?.Attribute}`}
-                    </Col>
-                    <Col dangerouslySetInnerHTML={{ __html: view?.Hit ? "&#x2605" : "" }} />
+                    <Col>{getMessage(view)}</Col>
                   </Row>
                 ))
               ) : (
@@ -65,7 +68,7 @@ export default function Views() {
         </Accordion.Item>
       );
     });
-  }, [numOfViews, views]);
+  }, [getMessage, numOfViews, views]);
 
   console.log({ accordionRows });
 
