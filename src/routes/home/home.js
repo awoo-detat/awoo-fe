@@ -101,7 +101,7 @@ export default function Home() {
 
   const alreadyJoined = useMemo(() => {
     console.log("users is", users);
-    return users.find((user) => user?.id === userId), [userId, users];
+    return users.find((user) => user?.id === userId);
   }, [userId, users]);
 
   const leaderId = useMemo(() => leader?.id || "", [leader]);
