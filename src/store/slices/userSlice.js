@@ -10,6 +10,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState: defaultState,
   reducers: {
+    killPlayer: (state) => {
+      state.localUser.alive = false;
+    },
     setUserName: (state, action) => {
       state.localUser.name = action.payload.name;
     },
@@ -23,6 +26,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserName, setUserId, setUserRole } = userSlice.actions;
+export const { setUserName, setUserId, setUserRole, killPlayer } = userSlice.actions;
 
 export default userSlice.reducer;

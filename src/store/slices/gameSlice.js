@@ -46,10 +46,8 @@ export const gameSlice = createSlice({
       state.inProgress = true;
     },
     setUserTallies: (state, action) => {
-      console.log('action.payload.list is', action.payload.list);
       const newData = action.payload.list;
       const updatedUsers = newData.map((user) => {
-        console.log ('user is', user);
         const { id, name } = user.player;
         const { votes } = user;
         return {
@@ -58,7 +56,6 @@ export const gameSlice = createSlice({
           votes,
         }
       });
-      console.log('updatedUsers is', updatedUsers);
       state.users = updatedUsers;
     },
   },

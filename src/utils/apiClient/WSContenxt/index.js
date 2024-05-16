@@ -1,7 +1,7 @@
 import { useEffect, createContext, useRef, useMemo, useState, useCallback } from "react";
 import config from "@constants/config";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserId, setUserName, setUserRole } from "@store/slices/userSlice";
+import { setUserId, setUserName, setUserRole, killPlayer } from "@store/slices/userSlice";
 import {
   setRoles,
   setSelectedRoleset,
@@ -83,6 +83,10 @@ function WebSocketProvider({ children }) {
             break;
           case "tallyChanged":
             dispatch(setUserTallies(data.payload));
+            break;
+          case "playerKilled":
+            dispatch(killPlayer());
+            break;
           case "error":
             console.error("error received from server:", data.payload);
             break;
