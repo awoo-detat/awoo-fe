@@ -3,7 +3,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { useState, useMemo, useEffect } from "react";
+import { WebSocketContext } from "@utils/apiClient/WSContenxt";
+import { useState, useMemo, useEffect, useCallback, useContext } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Views from "../views/views.js";
@@ -11,6 +12,7 @@ import Tally from "../voting/tally.js";
 import Voting from "../voting/voting.js";
 import "@scss/diurnal.scss";
 import paper3 from "../../assets/paper3.png";
+import howl from '../../assets/howl.mp3';
 
 export default function Diurnal({ isDay }) {
   const {
@@ -19,6 +21,7 @@ export default function Diurnal({ isDay }) {
     phase,
     gameOverDetails,
   } = useSelector(({ game }) => game);
+  const [, , ws] = useContext(WebSocketContext);
   const { role, name } = useSelector(({ user }) => user.localUser);
   const navigate = useNavigate();
 
@@ -39,6 +42,15 @@ export default function Diurnal({ isDay }) {
     [allUserData, isDay]
   );
   console.log({ phaseCount });
+
+  const handleAwoo = useCallback(() => {
+    ws.startAwoo();
+  }, [howl, ws]);
+
+
+  const handleSetGameInProgress = useCallback(() => {
+    ws.setGameInProgress();
+  }, [ws]);
 
   useEffect(() => {
     if (gameOverDetails) {
@@ -99,6 +111,11 @@ export default function Diurnal({ isDay }) {
                   <Col className="even-spacing">
                     <Button variant="primary" onClick={handleShow}>
                       Show&nbsp;Views
+                    </Button>
+                  </Col>
+                  <Col className="even-spacing">
+                    <Button variant="primary" onClick={handleAwoo}>
+                      Awooo!
                     </Button>
                   </Col>
                 </Row>
