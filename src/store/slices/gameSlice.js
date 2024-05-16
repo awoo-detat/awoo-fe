@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const defaultState = {
   inProgress: false,
@@ -9,18 +9,12 @@ const defaultState = {
   rolesetOptions: [],
   selectedRoleset: null,
   leader: null,
+  views: {},
 };
 
 export const gameSlice = createSlice({
   name: "game",
-  initialState: {
-    inProgress: false,
-    users: [],
-    phase: null,
-    phaseCount: 0,
-    rolesetOptions: [],
-    selectedRoleset: null,
-  },
+  initialState: defaultState,
   reducers: {
     // actions
     setGameInProgress: (state) => {
@@ -46,20 +40,35 @@ export const gameSlice = createSlice({
       state.inProgress = true;
     },
     setUserTallies: (state, action) => {
-      console.log('action.payload.list is', action.payload.list);
+      console.log("action.payload.list is", action.payload.list);
       const newData = action.payload.list;
       const updatedUsers = newData.map((user) => {
-        console.log ('user is', user);
+        console.log("user is", user);
         const { id, name } = user.player;
         const { votes } = user;
         return {
           id,
           name,
           votes,
-        }
+        };
       });
-      console.log('updatedUsers is', updatedUsers);
+      console.log("updatedUsers is", updatedUsers);
       state.users = updatedUsers;
+    },
+    addView: (state, action) => {
+      console.log({ action });
+      const { Player, Attribute, Role, GamePhase, Hit } = action.payload;
+      console.log({ Player, Attribute, Role, GamePhase, Hit, state });
+      const currState = current(state);
+      console.log({ currState });
+      // game phase already exists
+      if (currState.views[`${GamePhase}`]) {
+        state.views[`${GamePhase}`].push({ Player, Attribute, Role, Hit });
+      }
+      // game phase doesn't exist yet
+      else {
+        state.views[`${GamePhase}`] = [{ Player, Attribute, Role, Hit }];
+      }
     },
   },
 });
@@ -73,6 +82,7 @@ export const {
   setLeader,
   changePhaseDetails,
   setUserTallies,
+  addView,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
