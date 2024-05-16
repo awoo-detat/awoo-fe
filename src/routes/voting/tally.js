@@ -1,12 +1,14 @@
 import "@scss/tally.scss";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useSelector } from "react-redux";
 import { useCallback, useContext, useState } from "react";
 import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 
 export default function Tally({ allUserData }) {
   const [ws] = useContext(WebSocketContext);
   const [vote, setVote] = useState();
+  const { role } = useSelector(({ user }) => user.localUser);
 
   const onVoteChange = useCallback((id) => () => {
     setVote(id);
@@ -58,7 +60,9 @@ export default function Tally({ allUserData }) {
 
   return (
     <div className="tally__wrapper">
-      <h3>Village Rumors</h3>
+      {role.alive ? (
+        <h3>Village Rumors</h3>
+      ) : null}
       <p>
         <strong>Suspected to be a werewolf:</strong>
       </p>
