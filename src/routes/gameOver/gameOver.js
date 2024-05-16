@@ -36,7 +36,7 @@ export default function GameOver() {
   const allUsersAndRoles = useMemo(() => {
     return gameOverDetails.roles?.map((role) => {
         return (
-          <Col lg={4} md={6} className="card-and-buttons" key={role.name}>
+          <Col md={2} xs={4} className="card-and-buttons" key={role.name}>
             <div className={`flip-card ${showAllCards ? "show-front" : ""}`}>
               <div className="flip-card-inner">
                 {role ? (
@@ -57,7 +57,7 @@ export default function GameOver() {
                 ) : null}
               </div>
             </div>
-            <p>{role.role.name} - {role.name}</p>
+            <p className="align-left">{role.role.name} - {role.name}</p>
           </Col>
         );
       });
@@ -69,13 +69,15 @@ export default function GameOver() {
         {
           // TODO: put in the final details
           <Container>
-            <Row>
-              <Col className="bottom-padding">
-                <Button variant="primary" onClick={handleShow}>
-                  See who's who
-                </Button>
-              </Col>
-            </Row>
+            {!showAllCards ? (
+              <Row>
+                <Col className="bottom-padding">
+                  <Button variant="primary" onClick={handleShow}>
+                    See who's who
+                  </Button>
+                </Col>
+              </Row>
+            ) : null}
             <Row className="align-items-flex-start">
               { allUsersAndRoles }
             </Row>
