@@ -12,6 +12,7 @@ export default function GameOver() {
   const navigate = useNavigate();
 
   const { gameOverDetails } = useSelector(({ game }) => game);
+  console.log({ gameOverDetails });
   const { winner: winningTeam } = gameOverDetails || {};
   const [showAllCards, setShowAllCards] = useState(false);
 

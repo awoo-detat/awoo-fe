@@ -104,6 +104,7 @@ export default function Home() {
   const alreadyJoined = useMemo(() => users?.find((user) => user?.id === userId), [userId, users]);
 
   useEffect(() => {
+    console.log({ name, userName });
     if (name && !userName) {
       setUserNameFromInput(name);
     }
