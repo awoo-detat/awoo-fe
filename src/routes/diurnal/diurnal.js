@@ -107,7 +107,7 @@ export default function Diurnal({ isDay }) {
             </Col>
             <Col lg={8} md={12} className="main-game-contents">
               <h1>
-                {isDay ? "Day" : "Night"} {Math.round(phaseCount / 2)}
+                {isDay ? "☀️ Day" : "🌖 Night"} {Math.round(phaseCount / 2)}
               </h1>
               {votingComponent}
             </Col>
