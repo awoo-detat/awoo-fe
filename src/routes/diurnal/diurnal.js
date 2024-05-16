@@ -15,6 +15,7 @@ import paper3 from "../../assets/paper3.png";
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount, phase } = useSelector(({ game }) => game);
   const { role, name } = useSelector(({ user }) => user.localUser);
+  console.log('alive is', role.alive);
   const navigate = useNavigate();
 
   // eventually come from central state
@@ -40,6 +41,12 @@ export default function Diurnal({ isDay }) {
       navigate("/");
     }
   }, [navigate, phase]);
+
+  useEffect(() => {
+    if (!role.alive) {
+      navigate("/lose");
+    }
+  }, [navigate, role]);
 
   return (
     <div className={`diurnal ${!isDay ? "diurnal__night" : ""}`}>
