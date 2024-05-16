@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoseScreen({ children }) {
   const { role } = useSelector(({ user }) => user.localUser);
-  
-  const {
-    phase,
-    gameOverDetails,
-  } = useSelector(({ game }) => game);
-  const msg = useMemo(() => ((!role?.alive && gameOverDetails.winner === undefined) ? "You are dead" : "Evil has won"), [role]);
-  
+
+  const { phase, gameOverDetails } = useSelector(({ game }) => game);
+  const msg = useMemo(
+    () => (!role?.alive && gameOverDetails?.winner === undefined ? "You are dead" : "Evil has won"),
+    [gameOverDetails?.winner, role?.alive]
+  );
+
   const navigate = useNavigate();
 
   useEffect(() => {
