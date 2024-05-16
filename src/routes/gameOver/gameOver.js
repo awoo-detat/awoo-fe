@@ -21,10 +21,6 @@ export default function GameOver() {
     }
   }, [navigate, gameOverDetails]);
 
-  if (!gameOverDetails) {
-    return null;
-  }
-
   console.log({ gameOverDetails });
 
   const WinOrLoseScreen = gameOverDetails && winningTeam === "Good" ? WinScreen : LoseScreen;
@@ -33,35 +29,41 @@ export default function GameOver() {
     setShowAllCards(true);
   };
 
-  const allUsersAndRoles = useMemo(() => {
-    return gameOverDetails.roles?.map((role) => {
-        return (
-          <Col md={2} xs={4} className="card-and-buttons" key={role.name}>
-            <div className={`flip-card ${showAllCards ? "show-front" : ""}`}>
-              <div className="flip-card-inner">
-                {role ? (
-                  <>
-                    <div
-                      className="flip-card-front"
-                      // eslint-disable-next-line import/no-dynamic-require, global-require
-                      style={{ backgroundImage: `url(${require("../../assets/BACK.jpg")})` }}
-                    />
-                    <div
-                      className="flip-card-back"
-                      // eslint-disable-next-line import/no-dynamic-require, global-require
-                      style={{
-                        backgroundImage: `url(${require(`../../assets/${role?.role?.name}.jpg`)})`,
-                      }}
-                    />
-                  </>
-                ) : null}
-              </div>
+  const allUsersAndRoles = useMemo(
+    () =>
+      gameOverDetails.roles?.map((role) => (
+        <Col md={2} xs={4} className="card-and-buttons" key={role.name}>
+          <div className={`flip-card ${showAllCards ? "show-front" : ""}`}>
+            <div className="flip-card-inner">
+              {role ? (
+                <>
+                  <div
+                    className="flip-card-front"
+                    // eslint-disable-next-line import/no-dynamic-require, global-require
+                    style={{ backgroundImage: `url(${require("../../assets/BACK.jpg")})` }}
+                  />
+                  <div
+                    className="flip-card-back"
+                    // eslint-disable-next-line import/no-dynamic-require, global-require
+                    style={{
+                      backgroundImage: `url(${require(`../../assets/${role?.role?.name}.jpg`)})`,
+                    }}
+                  />
+                </>
+              ) : null}
             </div>
-            <p className="align-left">{role.role.name} - {role.name}</p>
-          </Col>
-        );
-      });
-  }, [gameOverDetails, showAllCards]);
+          </div>
+          <p className="align-left">
+            {role.role.name} - {role.name}
+          </p>
+        </Col>
+      )),
+    [gameOverDetails, showAllCards]
+  );
+
+  if (!gameOverDetails) {
+    return null;
+  }
 
   return (
     <div className="gameOver">
@@ -78,9 +80,7 @@ export default function GameOver() {
                 </Col>
               </Row>
             ) : null}
-            <Row className="align-items-flex-start">
-              { allUsersAndRoles }
-            </Row>
+            <Row className="align-items-flex-start">{allUsersAndRoles}</Row>
           </Container>
         }
       </WinOrLoseScreen>
