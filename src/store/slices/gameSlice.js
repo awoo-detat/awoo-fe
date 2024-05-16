@@ -23,7 +23,7 @@ export const gameSlice = createSlice({
     },
     resetGame: () => defaultState,
     setUsers: (state, action) => {
-      state.users = action.payload.users;
+      state.users = action.payload.users || [];
     },
     setRoles: (state, action) => {
       state.rolesetOptions = action.payload.rolesetOptions;
@@ -41,7 +41,7 @@ export const gameSlice = createSlice({
       state.inProgress = true;
     },
     setUserTallies: (state, action) => {
-      const newData = action.payload.list;
+      const newData = action.payload.list || [];
       const updatedUsers = newData.map((user) => {
         const { id, name } = user.player;
         const { votes } = user;
