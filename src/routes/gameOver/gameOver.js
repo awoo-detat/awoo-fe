@@ -54,7 +54,7 @@ export default function GameOver() {
             </div>
           </div>
           <p className="align-left">
-            {role.role.name} - {role.name}
+            {role.name}
           </p>
         </Col>
       )),

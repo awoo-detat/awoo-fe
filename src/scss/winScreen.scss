@@ -1,9 +1,9 @@
 .win-screen {
-  background-image: url("../assets/bloody_and_hands.jpeg"); // TODO: update
+  background-image: url("../assets/celebration.jpg"); // TODO: update
   background-repeat: no-repeat;
   background-size: 100%;
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   text-align: center;
   width: 100vw;
   min-height: 100vh;
@@ -11,6 +11,8 @@
   background-size: cover;
   display: flex;
   flex-direction: column;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .win {
