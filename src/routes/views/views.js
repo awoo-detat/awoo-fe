@@ -36,8 +36,6 @@ export default function Views() {
     const rows = new Array(numOfViews).fill(undefined);
     console.log({ rows });
 
-    // TODO: is there any way to distinguish between night and day?
-
     return rows.map((_, ind) => {
       const currView = views[ind];
       const curId = `event-${ind}`;
@@ -70,12 +68,17 @@ export default function Views() {
     });
   }, [getMessage, numOfViews, views]);
 
-  console.log({ accordionRows });
+  const listOfAccordionIds = useMemo(
+    () => accordionRows.map(({ props }) => props.eventKey),
+    [accordionRows]
+  );
+
+  console.log({ listOfAccordionIds });
 
   return (
     <div className="views__wrapper">
       {/* <Row>{headerCols}</Row> */}
-      <Accordion defaultActiveKey="event-0" alwaysOpen>
+      <Accordion defaultActiveKey={listOfAccordionIds} alwaysOpen>
         {accordionRows}
       </Accordion>
     </div>
