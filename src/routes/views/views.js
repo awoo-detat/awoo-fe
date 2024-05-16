@@ -37,7 +37,7 @@ export default function Views() {
           <Accordion.Header className="day-header">{ind}</Accordion.Header>
           <Accordion.Body>
             <Container fluid>
-              {currView.length ? (
+              {currView?.length ? (
                 currView.map((view) => (
                   <Row>
                     <Col>
