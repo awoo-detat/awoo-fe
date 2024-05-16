@@ -99,14 +99,18 @@ export default function Home() {
     [selectedRoleset?.roles?.length, users?.length]
   );
 
-  const alreadyJoined = useMemo(() => {
-    return users.find((user) => user?.id === userId);
-  }, [userId, users]);
+  const alreadyJoined = useMemo(() => users.find((user) => user?.id === userId), [userId, users]);
+
+  useEffect(() => {
+    if (name && !userName) {
+      setUserNameFromInput(name);
+    }
+  }, [name, userName]);
 
   const leaderId = useMemo(() => {
     const leaderIsInGame = users.find((user) => user?.id === leader.id);
     return leaderIsInGame ? leader?.id || null : null;
-  }, [leader]);
+  }, [leader.id, users]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
@@ -134,7 +138,7 @@ export default function Home() {
                       <Form.Control
                         type="text"
                         id="usernameInput"
-                        value={userName || name}
+                        value={userName}
                         onChange={(e) => setUserNameFromInput(e.target.value)}
                       />
                     )}
