@@ -1,28 +1,24 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import LoseScreen from "./components/LoseScreen";
 import WinScreen from "./components/WinScreen";
 
-export default function gameOver() {
+export default function GameOver() {
   const navigate = useNavigate();
 
-  const { gameOver, winningTeam } = useSelector(({ game }) => game);
+  const { gameOverDetails } = useSelector(({ game }) => game);
+  const { winner: winningTeam } = gameOverDetails || {};
 
   useEffect(() => {
-    if (!gameOver) {
+    if (!gameOverDetails) {
       navigate("/game");
     }
-  }, [navigate, gameOver]);
+  }, [navigate, gameOverDetails]);
 
   return (
-    <div
-      className="gameOver"
-    >
-      {gameOver && winningTeam === "Good" ? (
-        <WinScreen />
-      ) : (
-        <LoseScreen />
-      )}
+    <div className="gameOver">
+      {gameOverDetails && winningTeam === "Good" ? <WinScreen /> : <LoseScreen />}
     </div>
   );
 }
