@@ -3,8 +3,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Views from "../views/views.js";
 import Tally from "../voting/tally.js";
 import Voting from "../voting/voting.js";
@@ -12,8 +13,9 @@ import "@scss/diurnal.scss";
 import paper3 from "../../assets/paper3.png";
 
 export default function Diurnal({ isDay }) {
-  const { users: allUserData, phaseCount } = useSelector(({ game }) => game);
+  const { users: allUserData, phaseCount, phase } = useSelector(({ game }) => game);
   const { role } = useSelector(({ user }) => user.localUser);
+  const navigate = useNavigate();
 
   // eventually come from central state
   const [showFront, setShowFront] = useState(false);
@@ -32,6 +34,12 @@ export default function Diurnal({ isDay }) {
     [allUserData, isDay]
   );
   console.log({ phaseCount });
+
+  useEffect(() => {
+    if (!phase) {
+      navigate("/");
+    }
+  }, [navigate, phase]);
 
   return (
     <div className={`diurnal ${!isDay ? "diurnal__night" : ""}`}>
