@@ -110,9 +110,9 @@ export default function Home() {
   }, [name, userName]);
 
   const leaderId = useMemo(() => {
-    const leaderIsInGame = users.find((user) => user?.id === leader.id);
+    const leaderIsInGame = users.find((user) => user?.id === leader?.id);
     return leaderIsInGame ? leader?.id || null : null;
-  }, [leader.id, users]);
+  }, [leader?.id, users]);
 
   return (
     <div className="App" style={{ backgroundImage: `url(${fur})` }}>
