@@ -26,6 +26,7 @@ function WebSocketProvider({ children }) {
   const handlePressPlay = useCallback(() => {
     setPressedPlay(true);
   }, []);
+  const navigate = useNavigate();
 
   const navigate = useNavigate();
 
