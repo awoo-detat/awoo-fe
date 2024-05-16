@@ -39,12 +39,9 @@ export default function Views() {
     return rows.map((_, ind) => {
       const currView = views[ind];
       const curId = `event-${ind}`;
-      // listOfAccordionIds.push(curId);
-      // const isDay = viewStat.dateTime.indexOf("Day") >= 0;
-      console.log({ currView });
       return (
         <Accordion.Item eventKey={curId}>
-          <Accordion.Header className="day-header">{ind}</Accordion.Header>
+          <Accordion.Header className="day-header">Day {ind}</Accordion.Header>
           <Accordion.Body>
             <Container fluid>
               {currView?.length ? (
@@ -77,7 +74,6 @@ export default function Views() {
 
   return (
     <div className="views__wrapper">
-      {/* <Row>{headerCols}</Row> */}
       <Accordion defaultActiveKey={listOfAccordionIds} alwaysOpen>
         {accordionRows}
       </Accordion>
