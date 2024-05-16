@@ -45,6 +45,22 @@ export const gameSlice = createSlice({
       state.phaseCount = action.payload.count;
       state.inProgress = true;
     },
+    setUserTallies: (state, action) => {
+      console.log('action.payload.list is', action.payload.list);
+      const newData = action.payload.list;
+      const updatedUsers = newData.map((user) => {
+        console.log ('user is', user);
+        const { id, name } = user.player;
+        const { votes } = user;
+        return {
+          id,
+          name,
+          votes,
+        }
+      });
+      console.log('updatedUsers is', updatedUsers);
+      state.users = updatedUsers;
+    },
   },
 });
 
@@ -56,6 +72,7 @@ export const {
   setSelectedRoleset,
   setLeader,
   changePhaseDetails,
+  setUserTallies,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
