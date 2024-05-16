@@ -16,6 +16,10 @@ export default function GameOver() {
     }
   }, [navigate, gameOverDetails]);
 
+  if (!gameOverDetails) {
+    return null;
+  }
+
   return (
     <div className="gameOver">
       {gameOverDetails && winningTeam === "Good" ? <WinScreen /> : <LoseScreen />}

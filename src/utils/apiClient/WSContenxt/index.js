@@ -143,7 +143,7 @@ function WebSocketProvider({ children }) {
         socket.close();
       };
     }
-  }, [pressedPlay, dispatch, navigate]); // do not add id to this dep array
+  }, [pressedPlay, dispatch]); // do not add id to this dep array
 
   const providerVal = useMemo(
     () => [isReady, socketMessage, ws.current, handlePressPlay],
