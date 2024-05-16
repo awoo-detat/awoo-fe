@@ -147,7 +147,7 @@ export default function Home() {
                       <Button
                         onClick={handleSetGameInProgress}
                         size="lg"
-                        variant="secondary"
+                        variant="success"
                         disabled={!correctNumberOfPlayers}
                       >
                         Start!
