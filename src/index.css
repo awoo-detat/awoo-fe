@@ -31,6 +31,10 @@ h3 {
   padding-bottom: 2rem;
 }
 
+.align-left {
+  text-align: left;
+}
+
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   background-color: transparent;
@@ -38,6 +42,11 @@ h3 {
   height: 350px;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
   margin-bottom: 1rem;
+}
+
+.gameOver .flip-card {
+  width: 100px;
+  height: 140px;
 }
 
 /* This container is needed to position the front and back side */
@@ -67,6 +76,11 @@ h3 {
   background-repeat: no-repeat;
   background-position-y: center;
   border-radius: 25px;
+}
+
+.gameOver .flip-card-front,
+.gameOver .flip-card-back {
+  border-radius: 5px;
 }
 
 /* Style the back side */
