@@ -10,9 +10,9 @@ export default function Desk() {
 
   const isDay = useMemo(() => phase === "day", [phase]);
 
-  if (!phase || phase < 1) {
-    navigate("/home");
-  }
+  // if (!phase || phase < 1) {
+  //   navigate("/home");
+  // }
 
   return (
     <div

@@ -13,6 +13,7 @@ import {
   setGameOver,
   setError,
 } from "@store/slices/gameSlice";
+import howl from '../../../assets/howl.mp3';
 
 const WebSocketContext = createContext();
 
@@ -93,6 +94,10 @@ function WebSocketProvider({ children }) {
           case "view":
             dispatch(addView(data.payload));
             break;
+          case "awoo":
+            const audio = new Audio(howl);
+            audio.play();
+            break;
           case "gameOver":
             console.log("game over");
             dispatch(setGameOver(data.payload));
@@ -112,6 +117,14 @@ function WebSocketProvider({ children }) {
           JSON.stringify({
             messageType: "setName",
             playerName: userName,
+          })
+        );
+      };
+      socket.startAwoo = () => {
+        console.log('want to start an awoo');
+        socket.send(
+          JSON.stringify({
+            messageType: "awoo",
           })
         );
       };
