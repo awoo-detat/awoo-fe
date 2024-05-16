@@ -59,7 +59,7 @@ export default function Diurnal({ isDay }) {
     <div className={`diurnal ${!isDay ? "diurnal__night" : ""}`}>
       <Offcanvas show={showViews} onHide={handleClose}>
         <Offcanvas.Header closeButton closeVariant="white">
-          <Offcanvas.Title>Views</Offcanvas.Title>
+          <Offcanvas.Title>Insights</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Views />
@@ -98,7 +98,7 @@ export default function Diurnal({ isDay }) {
                   </Col>
                   <Col className="even-spacing">
                     <Button variant="primary" onClick={handleShow}>
-                      Show&nbsp;Views
+                      Insights
                     </Button>
                   </Col>
                 </Row>
