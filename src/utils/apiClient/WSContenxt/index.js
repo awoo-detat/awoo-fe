@@ -10,6 +10,7 @@ import {
   changePhaseDetails,
   setUserTallies,
   addView,
+  setGameOver,
 } from "@store/slices/gameSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -25,6 +26,8 @@ function WebSocketProvider({ children }) {
   const handlePressPlay = useCallback(() => {
     setPressedPlay(true);
   }, []);
+  const navigate = useNavigate();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -95,6 +98,7 @@ function WebSocketProvider({ children }) {
             break;
           case "gameOver":
             console.log("game over");
+            dispatch(setGameOver(data.payload));
             navigate("/gameover");
             break;
           case "error":
@@ -144,7 +148,7 @@ function WebSocketProvider({ children }) {
         socket.close();
       };
     }
-  }, [pressedPlay, dispatch]); // do not add id to this dep array
+  }, [pressedPlay, dispatch, navigate]); // do not add id to this dep array
 
   const providerVal = useMemo(
     () => [isReady, socketMessage, ws.current, handlePressPlay],

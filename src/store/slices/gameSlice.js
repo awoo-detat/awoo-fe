@@ -11,6 +11,7 @@ const defaultState = {
   selectedRoleset: null,
   leader: null,
   views: {},
+  gameOverDetails: null,
 };
 
 export const gameSlice = createSlice({
@@ -68,6 +69,9 @@ export const gameSlice = createSlice({
         state.views[`${GamePhase}`] = [{ Player, Attribute, Role, Hit }];
       }
     },
+    setGameOver: (state, action) => {
+      state.gameOverDetails = action.payload;
+    },
   },
 });
 
@@ -81,6 +85,7 @@ export const {
   changePhaseDetails,
   setUserTallies,
   addView,
+  setGameOver,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
