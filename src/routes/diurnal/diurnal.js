@@ -50,7 +50,7 @@ export default function Diurnal({ isDay }) {
   }, [navigate, phase, gameOverDetails]);
 
   useEffect(() => {
-    if (!role.alive) {
+    if (!role?.alive) {
       navigate("/lose");
     }
   }, [navigate, role]);
