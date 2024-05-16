@@ -12,6 +12,7 @@ import WinScreen from "@components/WinScreen";
 import LoseScreen from "@components/LoseScreen";
 import reportWebVitals from "./reportWebVitals";
 import PageWrapper from "./components/PageWrapper";
+import GameOver from "./routes/gameOver/gameOver";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,14 @@ const router = createBrowserRouter([
     element: (
       <PageWrapper>
         <LoseScreen />
+      </PageWrapper>
+    ),
+  },
+  {
+    path: "/gameover",
+    element: (
+      <PageWrapper>
+        <GameOver />
       </PageWrapper>
     ),
   },

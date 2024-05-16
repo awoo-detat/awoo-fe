@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import LoseScreen from "./components/LoseScreen";
-import WinScreen from "./components/WinScreen";
+import LoseScreen from "@components/LoseScreen";
+import WinScreen from "@components/WinScreen";
 
 export default function GameOver() {
   const navigate = useNavigate();

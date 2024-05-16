@@ -9,6 +9,7 @@ export default function Tally({ allUserData }) {
   const [ws] = useContext(WebSocketContext);
   const [vote, setVote] = useState();
   const { role } = useSelector(({ user }) => user.localUser);
+  const { gameOverDetails } = useSelector(({ game }) => game);
 
   const onVoteChange = useCallback(
     (id) => () => {
