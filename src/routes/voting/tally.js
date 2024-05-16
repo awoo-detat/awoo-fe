@@ -1,8 +1,23 @@
 import "@scss/tally.scss";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useCallback, useContext, useState } from "react";
+import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 
 export default function Tally({ allUserData }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isReady, socketMessage, ws] = useContext(WebSocketContext);
+  const [vote, setVote] = useState();
+
+  const onVoteChange = useCallback((id) => () => {
+    console.log('id is', id);
+    setVote(id);
+  }, []);
+
+  const onSubmitVote = useCallback(() => {
+    ws.submitVote(vote);
+  }, [vote, ws]);
+
   const listOfAlivePlayers =
     allUserData !== undefined && allUserData.length > 0 && allUserData[0].votes
       ? allUserData.sort((a, b) => {
@@ -13,25 +28,28 @@ export default function Tally({ allUserData }) {
         })
       : allUserData;
 
-  const votingOptionsWithTallys = listOfAlivePlayers.map((item) => {
+  const votingOptionsWithTallys = listOfAlivePlayers.map(({id, name, votes}) => {
     let formattedName;
-    if (item.votes?.length > 0) {
-      const combinedVoters = item.votes
+    const identifier = name.length > 0 ? name : id;
+    if (votes?.length > 0) {
+      const combinedVoters = votes
         ?.reduce((arr, vote) => {
           arr.push(vote.voter?.name);
           return arr;
         }, [])
         .join(",");
-      formattedName = `${item.name} - ${item.votes?.length} vote${item.votes?.length === 1 ? "" : "s"} from ${combinedVoters}`;
+      formattedName = `${identifier} - ${votes?.length} vote${votes?.length === 1 ? "" : "s"} from ${combinedVoters}`;
     } else {
-      formattedName = `${item.name} - 0 votes`;
+      formattedName = `${identifier} - 0 votes`;
     }
     return (
       <Form.Check
+        id={id}
         key={`voting-choice-${formattedName}`}
         type="radio"
         label={formattedName}
         name="voting-choice"
+        onChange={onVoteChange}
       />
     );
   });
@@ -43,7 +61,12 @@ export default function Tally({ allUserData }) {
         <strong>Suspected to be a werewolf:</strong>
       </p>
       {votingOptionsWithTallys}
-      <Button variant="primary" type="submit">
+      <Button
+        variant="primary"
+        type="submit"
+        onClick={onSubmitVote}
+        disabled={!vote}
+      >
         Vote
       </Button>
     </div>
