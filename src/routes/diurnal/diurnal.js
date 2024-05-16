@@ -15,7 +15,6 @@ import paper3 from "../../assets/paper3.png";
 export default function Diurnal({ isDay }) {
   const { users: allUserData, phaseCount, phase } = useSelector(({ game }) => game);
   const { role, name } = useSelector(({ user }) => user.localUser);
-  console.log('alive is', role.alive);
   const navigate = useNavigate();
 
   // eventually come from central state
