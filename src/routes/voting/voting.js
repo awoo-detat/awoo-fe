@@ -8,12 +8,14 @@ import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 export default function Voting({ allUserData }) {
   const { name: role } = useSelector(({ user }) => user.localUser?.role || "");
   const [vote, setVote] = useState();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isReady, socketMessage, ws] = useContext(WebSocketContext);
+  const [, , ws] = useContext(WebSocketContext);
 
-  const onVoteChange = useCallback((e) => {
-    setVote(e.target.id);
-  }, []);
+  const onVoteChange = useCallback(
+    (id) => () => {
+      setVote(id);
+    },
+    []
+  );
 
   const onSubmitVote = useCallback(() => {
     ws.submitVote(vote);
@@ -21,14 +23,14 @@ export default function Voting({ allUserData }) {
 
   const votingOptions = useMemo(
     () =>
-      allUserData.map((user) => (
+      allUserData.map(({ name, id }) => (
         <Form.Check
-          id={user.name}
-          key={`action-choice-${user.name}`}
+          id={id}
+          key={`action-choice-${id}`}
           type="radio"
-          label={user.name}
+          label={name}
           name="voting-choice"
-          onChange={onVoteChange}
+          onChange={onVoteChange(id)}
         />
       )),
     [allUserData, onVoteChange]

@@ -115,9 +115,9 @@ function WebSocketProvider({ children }) {
         console.log("starting game");
         socket.send(JSON.stringify({ messageType: "start" }));
       };
-      socket.submitVote = (vote) => {
-        console.log("submitting vote:", vote);
-        socket.send(JSON.stringify({ messageType: "vote", vote }));
+      socket.submitVote = (userId) => {
+        console.log("submitting vote:", userId);
+        socket.send(JSON.stringify({ messageType: "vote", target: userId }));
       };
       return () => {
         socket.close();
