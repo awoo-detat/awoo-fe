@@ -4,7 +4,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 const defaultState = {
   inProgress: false,
   users: [],
-  phase: "day",
+  phase: null,
   phaseCount: 0,
   rolesetOptions: [],
   selectedRoleset: null,
