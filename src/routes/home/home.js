@@ -83,6 +83,7 @@ export default function Home() {
     () => rolesetOptions?.find((roleset) => roleset.name === dropdownRolesetValue)?.description,
     [rolesetOptions, dropdownRolesetValue]
   );
+  console.log({ rolesetOptions, users });
 
   useEffect(() => {
     if (!selectedRoleset && rolesetOptions.length) {
