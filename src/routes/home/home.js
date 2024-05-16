@@ -80,7 +80,7 @@ export default function Home() {
   );
 
   const rolesetDescription = useMemo(
-    () => rolesetOptions.find((roleset) => roleset.name === dropdownRolesetValue)?.description,
+    () => rolesetOptions?.find((roleset) => roleset.name === dropdownRolesetValue)?.description,
     [rolesetOptions, dropdownRolesetValue]
   );
 
@@ -101,7 +101,7 @@ export default function Home() {
     [selectedRoleset?.roles?.length, users?.length]
   );
 
-  const alreadyJoined = useMemo(() => users.find((user) => user?.id === userId), [userId, users]);
+  const alreadyJoined = useMemo(() => users?.find((user) => user?.id === userId), [userId, users]);
 
   useEffect(() => {
     if (name && !userName) {
@@ -110,7 +110,7 @@ export default function Home() {
   }, [name, userName]);
 
   const leaderId = useMemo(() => {
-    const leaderIsInGame = users.find((user) => user?.id === leader?.id);
+    const leaderIsInGame = users?.find((user) => user?.id === leader?.id);
     return leaderIsInGame ? leader?.id || null : null;
   }, [leader?.id, users]);
 
