@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoseScreen({ children }) {
   const { role } = useSelector(({ user }) => user.localUser);
-  const msg = useMemo(() => (!role?.alive ? "You are dead" : "Evil has won"), [role]);
+  const msg = useMemo(() => (!role?.alive && !gameOverDetails  ? "You are dead" : "Evil has won"), [role]);
   const {
     phase,
     gameOverDetails,
