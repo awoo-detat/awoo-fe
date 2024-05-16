@@ -11,6 +11,7 @@ const defaultState = {
   leader: null,
   views: {},
   gameOverDetails: null,
+  error: null,
 };
 
 export const gameSlice = createSlice({
@@ -71,6 +72,9 @@ export const gameSlice = createSlice({
     setGameOver: (state, action) => {
       state.gameOverDetails = action.payload;
     },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
@@ -85,6 +89,7 @@ export const {
   setUserTallies,
   addView,
   setGameOver,
+  setError,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
