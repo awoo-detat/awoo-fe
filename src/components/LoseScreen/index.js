@@ -10,7 +10,7 @@ export default function LoseScreen({ children }) {
     phase,
     gameOverDetails,
   } = useSelector(({ game }) => game);
-  const msg = useMemo(() => ((!role?.alive && gameOverDetails.winner === undefined)  ? "You are dead" : "Evil has won"), [role]);
+  const msg = useMemo(() => ((!role?.alive && gameOverDetails.winner === undefined) ? "You are dead" : "Evil has won"), [role]);
   
   const navigate = useNavigate();
 
