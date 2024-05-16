@@ -72,7 +72,7 @@ export default function Home() {
 
   const handleSetRoleset = useCallback(
     (e) => {
-      console.log("setting roleset", e.target.value);
+      console.log("-------------setting roleset", e.target.value);
       setDropdownRolesetValue(e.target.value);
       ws.setRoleset(e.target.value);
     },
@@ -86,9 +86,15 @@ export default function Home() {
 
   useEffect(() => {
     if (!selectedRoleset && rolesetOptions.length) {
-      handleSetRoleset({ target: { value: rolesetDescription } });
+      handleSetRoleset({ target: { value: rolesetOptions[0].name } });
     }
-  }, [handleSetRoleset, rolesetDescription, rolesetOptions.length, selectedRoleset]);
+  }, [
+    handleSetRoleset,
+    rolesetDescription,
+    rolesetOptions,
+    rolesetOptions.length,
+    selectedRoleset,
+  ]);
 
   const startAGame = useCallback(() => {
     handlePressPlay();
@@ -188,7 +194,7 @@ export default function Home() {
                       </div>
                     ) : null}
                     {!inProgress && rolesetOptions.length ? (
-                      <FormSelect onChange={handleSetRoleset}>
+                      <FormSelect onChange={handleSetRoleset} defaultValue={rolesetOptions[0]}>
                         {rolesetOptions.map((roleset) => (
                           <option key={roleset.name} value={roleset.name}>
                             {roleset.name}
