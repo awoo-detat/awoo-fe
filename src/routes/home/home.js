@@ -18,9 +18,8 @@ import howling from "../../assets/wolf-howl.png";
 export default function Home() {
   const [isFirstView, setIsFirstView] = useState(true);
   const { name, id: userId } = useSelector(({ user }) => user.localUser);
-  const { inProgress, users, rolesetOptions, selectedRoleset, phase, leader } = useSelector(
-    ({ game }) => game
-  );
+  const { inProgress, users, rolesetOptions, selectedRoleset, phase, leader, gameOverDetails } =
+    useSelector(({ game }) => game);
   const [userName, setUserNameFromInput] = useState(name);
   const [dropdownRolesetValue, setDropdownRolesetValue] = useState();
   const [userDisconnected, setUserDisconnected] = useState(false);
@@ -40,10 +39,13 @@ export default function Home() {
     if (!inProgress && phase) {
       dispatch(setGameInProgress());
     }
+    if (gameOverDetails) {
+      navigate("/gameover");
+    }
     if (phase) {
       navigate("/game");
     }
-  }, [dispatch, inProgress, navigate, phase]);
+  }, [dispatch, inProgress, navigate, phase, gameOverDetails]);
 
   const handleUpdateUser = useCallback(() => {
     ws.onSetUserName(userName);

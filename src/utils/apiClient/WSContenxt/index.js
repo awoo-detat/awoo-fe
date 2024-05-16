@@ -12,7 +12,6 @@ import {
   addView,
   setGameOver,
 } from "@store/slices/gameSlice";
-import { useNavigate } from "react-router-dom";
 
 const WebSocketContext = createContext();
 
@@ -26,9 +25,6 @@ function WebSocketProvider({ children }) {
   const handlePressPlay = useCallback(() => {
     setPressedPlay(true);
   }, []);
-  const navigate = useNavigate();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (pressedPlay || (!pressedPlay && id)) {
@@ -99,7 +95,6 @@ function WebSocketProvider({ children }) {
           case "gameOver":
             console.log("game over");
             dispatch(setGameOver(data.payload));
-            navigate("/gameover");
             break;
           case "error":
             console.error("error received from server:", data.payload);

@@ -13,7 +13,12 @@ import "@scss/diurnal.scss";
 import paper3 from "../../assets/paper3.png";
 
 export default function Diurnal({ isDay }) {
-  const { users: allUserData, phaseCount, phase } = useSelector(({ game }) => game);
+  const {
+    users: allUserData,
+    phaseCount,
+    phase,
+    gameOverDetails,
+  } = useSelector(({ game }) => game);
   const { role, name } = useSelector(({ user }) => user.localUser);
   const navigate = useNavigate();
 
@@ -36,10 +41,13 @@ export default function Diurnal({ isDay }) {
   console.log({ phaseCount });
 
   useEffect(() => {
+    if (gameOverDetails) {
+      navigate("/gameover");
+    }
     if (!phase) {
       navigate("/");
     }
-  }, [navigate, phase]);
+  }, [navigate, phase, gameOverDetails]);
 
   useEffect(() => {
     if (!role.alive) {
@@ -50,7 +58,7 @@ export default function Diurnal({ isDay }) {
   return (
     <div className={`diurnal ${!isDay ? "diurnal__night" : ""}`}>
       <Offcanvas show={showViews} onHide={handleClose}>
-        <Offcanvas.Header closeButton closeVariant='white'>
+        <Offcanvas.Header closeButton closeVariant="white">
           <Offcanvas.Title>Views</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
