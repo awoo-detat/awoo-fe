@@ -9,6 +9,7 @@ import {
   setLeader,
   changePhaseDetails,
   setUserTallies,
+  addView,
 } from "@store/slices/gameSlice";
 
 const WebSocketContext = createContext();
@@ -86,6 +87,9 @@ function WebSocketProvider({ children }) {
             break;
           case "playerKilled":
             dispatch(killPlayer());
+            break;
+          case "view":
+            dispatch(addView(data.payload));
             break;
           case "error":
             console.error("error received from server:", data.payload);

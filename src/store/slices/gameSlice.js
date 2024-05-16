@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const defaultState = {
   inProgress: false,
@@ -9,18 +9,12 @@ const defaultState = {
   rolesetOptions: [],
   selectedRoleset: null,
   leader: null,
+  views: {},
 };
 
 export const gameSlice = createSlice({
   name: "game",
-  initialState: {
-    inProgress: false,
-    users: [],
-    phase: null,
-    phaseCount: 0,
-    rolesetOptions: [],
-    selectedRoleset: null,
-  },
+  initialState: defaultState,
   reducers: {
     // actions
     setGameInProgress: (state) => {
@@ -54,9 +48,24 @@ export const gameSlice = createSlice({
           id,
           name,
           votes,
-        }
+        };
       });
       state.users = updatedUsers;
+    },
+    addView: (state, action) => {
+      console.log({ action });
+      const { Player, Attribute, Role, GamePhase, Hit } = action.payload;
+      console.log({ Player, Attribute, Role, GamePhase, Hit, state });
+      const currState = current(state);
+      console.log({ currState });
+      // game phase already exists
+      if (currState.views[`${GamePhase}`]) {
+        state.views[`${GamePhase}`].push({ Player, Attribute, Role, Hit });
+      }
+      // game phase doesn't exist yet
+      else {
+        state.views[`${GamePhase}`] = [{ Player, Attribute, Role, Hit }];
+      }
     },
   },
 });
@@ -70,6 +79,7 @@ export const {
   setLeader,
   changePhaseDetails,
   setUserTallies,
+  addView,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
