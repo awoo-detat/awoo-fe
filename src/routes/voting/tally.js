@@ -20,9 +20,9 @@ export default function Tally({ allUserData }) {
 
   let listOfAlivePlayers =
     updatedUserData !== undefined && updatedUserData.length > 0 && updatedUserData?.some((user) => {
-      return user.votes.length > 0;
+      return user.votes?.length > 0;
       })
-      ? updatedUserData.sort((a, b) => {
+      ? updatedUserData?.sort((a, b) => {
           if (a.votes !== undefined && b.votes !== undefined) {
             return (b.votes?.length) - (a.votes?.length);
           }
