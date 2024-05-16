@@ -11,7 +11,7 @@ export const userSlice = createSlice({
   initialState: defaultState,
   reducers: {
     killPlayer: (state) => {
-      state.localUser.alive = false;
+      state.localUser.role.alive = false;
     },
     setUserName: (state, action) => {
       state.localUser.name = action.payload.name;
