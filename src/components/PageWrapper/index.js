@@ -14,7 +14,6 @@ export default function PageWrapper({ children }) {
       error &&
       (typeof error === "string" || (typeof error === "object" && Object.keys(error).length > 1))
     ) {
-      console.log("setting to true!!!!", error);
       setShowError(true);
       window.setTimeout(() => {
         setShowError(false);
