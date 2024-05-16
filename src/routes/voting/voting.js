@@ -9,16 +9,18 @@ export default function Voting({ allUserData }) {
   const { name: role } = useSelector(({ user }) => user.localUser?.role || "");
   const [vote, setVote] = useState();
   const [, , ws] = useContext(WebSocketContext);
+  const [submittedAction, setSubmittedAction] = useState(false);
 
-  const onVoteChange = useCallback(
+  const onSelectionChange = useCallback(
     (id) => () => {
       setVote(id);
     },
     []
   );
 
-  const onSubmitVote = useCallback(() => {
-    ws.submitVote(vote);
+  const onSubmitNightAction = useCallback(() => {
+    ws.submitNightAction(vote);
+    setSubmittedAction(true);
   }, [vote, ws]);
 
   const votingOptions = useMemo(
@@ -30,10 +32,10 @@ export default function Voting({ allUserData }) {
           type="radio"
           label={name}
           name="voting-choice"
-          onChange={onVoteChange(id)}
+          onChange={onSelectionChange(id)}
         />
       )),
-    [allUserData, onVoteChange]
+    [allUserData, onSelectionChange]
   );
 
   const actionText = useMemo(() => {
@@ -54,9 +56,15 @@ export default function Voting({ allUserData }) {
   return (
     <div className="voting__wrapper">
       <h3>{actionText}</h3>
+      {submittedAction ? (
+        <p>
+          Your action has been submitted, still waiting on others. You can still change your action
+          if desired.
+        </p>
+      ) : null}
       <Form>
         {votingOptions}
-        <Button variant="primary" onClick={onSubmitVote} disabled={!vote}>
+        <Button variant="primary" onClick={onSubmitNightAction} disabled={!vote}>
           Choose
         </Button>
       </Form>

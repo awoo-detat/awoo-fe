@@ -5,14 +5,16 @@ import { useCallback, useContext, useState } from "react";
 import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 
 export default function Tally({ allUserData }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isReady, socketMessage, ws] = useContext(WebSocketContext);
+  const [, , ws] = useContext(WebSocketContext);
   const [vote, setVote] = useState();
 
-  const onVoteChange = useCallback((id) => () => {
-    console.log('id is', id);
-    setVote(id);
-  }, []);
+  const onVoteChange = useCallback(
+    (id) => () => {
+      console.log("id is", id);
+      setVote(id);
+    },
+    []
+  );
 
   const onSubmitVote = useCallback(() => {
     ws.submitVote(vote);
@@ -28,7 +30,7 @@ export default function Tally({ allUserData }) {
         })
       : allUserData;
 
-  const votingOptionsWithTallys = listOfAlivePlayers.map(({id, name, votes}) => {
+  const votingOptionsWithTallys = listOfAlivePlayers.map(({ id, name, votes }) => {
     let formattedName;
     const identifier = name.length > 0 ? name : id;
     if (votes?.length > 0) {
@@ -61,12 +63,7 @@ export default function Tally({ allUserData }) {
         <strong>Suspected to be a werewolf:</strong>
       </p>
       {votingOptionsWithTallys}
-      <Button
-        variant="primary"
-        type="submit"
-        onClick={onSubmitVote}
-        disabled={!vote}
-      >
+      <Button variant="primary" type="submit" onClick={onSubmitVote} disabled={!vote}>
         Vote
       </Button>
     </div>
