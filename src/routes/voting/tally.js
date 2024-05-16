@@ -9,7 +9,6 @@ export default function Tally({ allUserData }) {
   const [vote, setVote] = useState();
 
   const onVoteChange = useCallback((id) => () => {
-    console.log('id is', id);
     setVote(id);
     }, []);
 
@@ -17,12 +16,10 @@ export default function Tally({ allUserData }) {
     ws.submitVote(vote);
   }, [vote, ws]);
 
-  console.log('inside tally and allUserData is', allUserData);
-
   const updatedUserData = [ ...allUserData ];
 
   let listOfAlivePlayers =
-    updatedUserData !== undefined && updatedUserData.length > 0 && updatedUserData.some((user) => {
+    updatedUserData !== undefined && updatedUserData.length > 0 && updatedUserData?.some((user) => {
       return user.votes.length > 0;
       })
       ? updatedUserData.sort((a, b) => {
