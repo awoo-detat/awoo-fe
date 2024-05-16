@@ -6,7 +6,7 @@ import { useCallback, useContext, useState } from "react";
 import { WebSocketContext } from "../../utils/apiClient/WSContenxt";
 
 export default function Tally({ allUserData }) {
-  const [ws] = useContext(WebSocketContext);
+  const [, , ws] = useContext(WebSocketContext);
   const [vote, setVote] = useState();
   const { role } = useSelector(({ user }) => user.localUser);
   const { gameOverDetails } = useSelector(({ game }) => game);
