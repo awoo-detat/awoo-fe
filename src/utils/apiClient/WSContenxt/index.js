@@ -11,6 +11,7 @@ import {
   setUserTallies,
   addView,
   setGameOver,
+  setError,
 } from "@store/slices/gameSlice";
 
 const WebSocketContext = createContext();
@@ -98,6 +99,7 @@ function WebSocketProvider({ children }) {
             break;
           case "error":
             console.error("error received from server:", data.payload);
+            dispatch(setError(data.payload));
             break;
           // TODO: name set message
           default:
