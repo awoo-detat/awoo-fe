@@ -4,100 +4,77 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Accordion from "react-bootstrap/Accordion";
 import { useSelector } from "react-redux";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 export default function Views() {
-  const listOfAccordionIds = [];
+  // const listOfAccordionIds = [];
   const { views } = useSelector(({ game }) => game);
   console.log({ views });
 
-  const numOfViews = views && Object.keys(views)?.length;
+  const numOfViews = useMemo(() => {
+    const initialCount = views && Object.keys(views)?.length;
+    if (!views[0]) {
+      // not all users get info the first day
+      return initialCount + 1;
+    }
+    return initialCount;
+  }, [views]);
 
-  // const accordionRows = useMemo(() => {
+  const accordionRows = useMemo(() => {
+    const rows = new Array(numOfViews).fill(undefined);
+    console.log({ rows });
 
-  //   const rows = new Array(numOfViews)
-  //   return rows.map(() => {
-  //     const curId = `event-${idx}`;
-  //     listOfAccordionIds.push(curId);
-  //     const isDay = viewStat.dateTime.indexOf("Day") >= 0;
-  //     return (
-  //       <Accordion.Item eventKey={curId}>
-  //         <Accordion.Header className={`${isDay ? "day-header" : "night-header"}`}>
-  //           {viewStat.dateTime}
-  //         </Accordion.Header>
-  //         <Accordion.Body>
-  //           <Container fluid>
-  //             <Row>
-  //               <Col>
-  //                 <strong>{viewStat.playerName}</strong>
-  //               </Col>
-  //               <Col>{viewStat.playerStatus}</Col>
-  //               <Col dangerouslySetInnerHTML={{ __html: viewStat.scryedStatus ? "&#x2605" : "" }} />
-  //             </Row>
-  //           </Container>
-  //         </Accordion.Body>
-  //       </Accordion.Item>
-  //     );
-  //   })
-  // }, []);
+    // TODO: is there any way to distinguish between night and day?
 
-  // const accordionRows = [
-  //   {
-  //     dateTime: "Day 1",
-  //     playerName: "Dan Conley",
-  //     playerStatus: "Not Wolf",
-  //     scryedStatus: true,
-  //   },
-  //   {
-  //     dateTime: "Night 1",
-  //     playerName: "Julia Kester",
-  //     playerStatus: "Villager",
-  //     scryedStatus: false,
-  //   },
-  //   {
-  //     dateTime: "Day 2",
-  //     playerName: "Joe Forsyth",
-  //     playerStatus: "Definitely not a Wolf",
-  //     scryedStatus: false,
-  //   },
-  //   {
-  //     dateTime: "Night 2",
-  //     playerName: "Camille Kaniecki",
-  //     playerStatus: "Sorceror",
-  //     scryedStatus: true,
-  //   },
-  // ].map((viewStat, idx) => {
-  //   const curId = `event-${idx}`;
-  //   listOfAccordionIds.push(curId);
-  //   const isDay = viewStat.dateTime.indexOf("Day") >= 0;
-  //   return (
-  //     <Accordion.Item eventKey={curId}>
-  //       <Accordion.Header className={`${isDay ? "day-header" : "night-header"}`}>
-  //         {viewStat.dateTime}
-  //       </Accordion.Header>
-  //       <Accordion.Body>
-  //         <Container fluid>
-  //           <Row>
-  //             <Col>
-  //               <strong>{viewStat.playerName}</strong>
-  //             </Col>
-  //             <Col>{viewStat.playerStatus}</Col>
-  //             <Col dangerouslySetInnerHTML={{ __html: viewStat.scryedStatus ? "&#x2605" : "" }} />
-  //           </Row>
-  //         </Container>
-  //       </Accordion.Body>
-  //     </Accordion.Item>
-  //   );
-  // });
+    return rows.map((_, ind) => {
+      const currView = views[ind];
+      const curId = `event-${ind}`;
+      // listOfAccordionIds.push(curId);
+      // const isDay = viewStat.dateTime.indexOf("Day") >= 0;
+      console.log({ currView });
+      return (
+        <Accordion.Item eventKey={curId}>
+          <Accordion.Header className="day-header">{ind}</Accordion.Header>
+          <Accordion.Body>
+            <Container fluid>
+              {currView?.length ? (
+                currView.map((view) => (
+                  <Row>
+                    <Col>
+                      <strong>{view?.Player?.name}</strong>
+                    </Col>
+                    <Col>
+                      {view?.Hit
+                        ? view?.Attribute === "Max Evil"
+                          ? "Werewolf"
+                          : view?.Attribute === "Max Evil"
+                        : view?.Attribute === "Max Evil"
+                          ? "Not Werewolf"
+                          : `Not ${view?.Attribute}`}
+                    </Col>
+                    <Col dangerouslySetInnerHTML={{ __html: view?.Hit ? "&#x2605" : "" }} />
+                  </Row>
+                ))
+              ) : (
+                <Row>
+                  <Col>No information for this day</Col>
+                </Row>
+              )}
+            </Container>
+          </Accordion.Body>
+        </Accordion.Item>
+      );
+    });
+  }, [numOfViews, views]);
+
+  console.log({ accordionRows });
 
   return (
     <div className="views__wrapper">
-      {/* <Row>
-        { headerCols }
-      </Row> */}
-      {/* <Accordion defaultActiveKey={listOfAccordionIds} alwaysOpen>
+      {/* <Row>{headerCols}</Row> */}
+      <Accordion defaultActiveKey="event-0" alwaysOpen>
         {accordionRows}
-      </Accordion> */}
+      </Accordion>
     </div>
   );
 }
