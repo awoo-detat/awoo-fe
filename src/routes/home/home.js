@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import sortBy from "sort-by";
 import "./home.css";
 import { resetGame, setGameInProgress } from "@store/slices/gameSlice";
 import { WebSocketContext } from "@utils/apiClient/WSContenxt";
@@ -79,22 +80,16 @@ export default function Home() {
     [ws]
   );
 
-  const rolesetDescription = useMemo(
-    () => rolesetOptions?.find((roleset) => roleset.name === dropdownRolesetValue)?.description,
-    [rolesetOptions, dropdownRolesetValue]
+  const rolesetRoles = useMemo(
+    () => selectedRoleset?.roles.slice().sort(sortBy("team", "-night_action", "name")),
+    [selectedRoleset]
   );
 
   useEffect(() => {
     if (!selectedRoleset && rolesetOptions.length) {
       handleSetRoleset({ target: { value: rolesetOptions[0].name } });
     }
-  }, [
-    handleSetRoleset,
-    rolesetDescription,
-    rolesetOptions,
-    rolesetOptions.length,
-    selectedRoleset,
-  ]);
+  }, [handleSetRoleset, rolesetOptions, rolesetOptions.length, selectedRoleset]);
 
   const startAGame = useCallback(() => {
     handlePressPlay();
@@ -186,7 +181,6 @@ export default function Home() {
                         Connect
                       </Button>
                     )}
-                    {selectedRoleset && <h3>Roleset selected: {selectedRoleset.name}</h3>}
                     {!inProgress && rolesetOptions.length ? (
                       <div className="leader-view">
                         <h3>You’re the leader!</h3>
@@ -202,18 +196,46 @@ export default function Home() {
                         ))}
                       </FormSelect>
                     ) : null}
-                    {!inProgress && rolesetDescription && <p>{rolesetDescription}</p>}
                     {users.length >= 1 && (
                       <>
                         <h3>Player list:</h3>
                         <ListGroup>
                           {users.map((user) => (
-                            <ListGroup.Item key={user.id} variant="Secondary">
+                            <ListGroup.Item key={user.id} variant="secondary">
                               {user.name || user.id} {leaderId === user.id ? "👑" : ""}
                             </ListGroup.Item>
                           ))}
                         </ListGroup>
                       </>
+                    )}
+                    {!inProgress && rolesetOptions.length ? (
+                      <div className="leader-view">
+                        <h3>You’re the leader!</h3>
+                        <p>Choose a roleset:</p>
+                      </div>
+                    ) : null}
+                    {!inProgress && rolesetOptions.length ? (
+                      <FormSelect onChange={handleSetRoleset} defaultValue={rolesetOptions[0]}>
+                        {rolesetOptions.map((roleset) => (
+                          <option key={roleset.name} value={roleset.name}>
+                            {roleset.name}
+                          </option>
+                        ))}
+                      </FormSelect>
+                    ) : null}
+                    {selectedRoleset && (
+                      <div>
+                        <h3>Roleset selected: {selectedRoleset.name}</h3>
+                        <p className="fs-4">{selectedRoleset.description}</p>
+                        <h4>Roles:</h4>
+                        <ListGroup>
+                          {rolesetRoles.map((r) => (
+                            <ListGroup.Item variant="secondary">
+                              {r.name} ({r.team})
+                            </ListGroup.Item>
+                          ))}
+                        </ListGroup>
+                      </div>
                     )}
                   </div>
                 </WebsocketStausIndicator>
